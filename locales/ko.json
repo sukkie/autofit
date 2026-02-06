@@ -1,0 +1,235 @@
+{
+  "common": {
+    "next": "다음 단계",
+    "prev": "이전",
+    "required": "필수",
+    "optional": "선택사항",
+    "select": "선택하세요",
+    "loading": "로딩 중...",
+    "error": "오류"
+  },
+  "header": {
+    "title": "오토핏",
+    "subtitle": "AI 가상 코디네이션",
+    "poweredBy": "Powered by Google Vertex AI"
+  },
+  "footer": {
+    "copyright": "© 2024 AutoFit. All rights reserved.",
+    "description": "AI 기반 패션 코디네이션 서비스 | 개인정보는 저장되지 않습니다"
+  },
+  "landing": {
+    "hero": {
+      "title1": "당신만을 위한",
+      "title2": "AI 패션 코디네이터",
+      "subtitle1": "단 5분이면 완성되는 맞춤형 스타일링 가이드",
+      "subtitle2": "당신의 체형, 피부톤, 스타일을 분석하여 최적의 코디를 제안합니다",
+      "cta": "무료로 시작하기",
+      "features": "✨ 회원가입 불필요 · 100% 무료 · 개인정보 저장 안함"
+    },
+    "features": {
+      "analysis": {
+        "title": "정확한 분석",
+        "description": "신체 비율과 피부톤을 고려한 과학적인 스타일 분석"
+      },
+      "color": {
+        "title": "컬러 매칭",
+        "description": "당신에게 어울리는 최적의 컬러 팔레트 추천"
+      },
+      "guide": {
+        "title": "스타일 가이드",
+        "description": "TPO별 상황에 맞는 구체적인 코디 조언"
+      }
+    },
+    "howItWorks": {
+      "title": "어떻게 작동하나요?",
+      "step1": {
+        "title": "신체 정보",
+        "description": "키, 체중, 체형 입력"
+      },
+      "step2": {
+        "title": "사진 업로드",
+        "description": "전신 사진 촬영"
+      },
+      "step3": {
+        "title": "스타일 선택",
+        "description": "선호 스타일 고르기"
+      },
+      "step4": {
+        "title": "상황 설정",
+        "description": "착용 상황 선택"
+      },
+      "step5": {
+        "title": "결과 확인",
+        "description": "맞춤 코디 가이드"
+      }
+    },
+    "cta": {
+      "title": "지금 바로 시작하세요",
+      "subtitle": "AI가 분석하는 나만의 스타일링 가이드",
+      "button": "무료 분석 시작하기"
+    }
+  },
+  "steps": {
+    "bodyInfo": "신체정보",
+    "photo": "사진",
+    "styleOption": "스타일",
+    "tpo": "TPO",
+    "bodyConcern": "고민사항"
+  },
+  "bodyInfo": {
+    "title": "신체 정보 입력",
+    "subtitle": "정확한 코디네이션을 위해 신체 정보를 입력해주세요.",
+    "height": "신장 (cm)",
+    "weight": "체중 (kg)",
+    "bodyType": "체형",
+    "skinTone": "피부톤",
+    "bodyTypes": {
+      "slim": "슬림 - 마른 체형",
+      "normal": "표준 - 보통 체형",
+      "chubby": "통통 - 풍만한 체형",
+      "muscular": "건장함 - 근육질 체형"
+    },
+    "skinTones": {
+      "cool": "쿨톤 - 차가운 톤",
+      "warm": "웜톤 - 따뜻한 톤",
+      "neutral": "중성 - 중간 톤"
+    }
+  },
+  "photoUpload": {
+    "title": "사진 업로드",
+    "subtitle": "전신 사진을 업로드해주세요. AI가 더 정확한 분석을 제공합니다.",
+    "dragDrop": "클릭하거나 파일을 드래그하여 업로드",
+    "fileTypes": "JPEG, PNG, WEBP (최대 10MB)",
+    "selectFile": "파일 선택",
+    "remove": "이미지 제거"
+  },
+  "styleOption": {
+    "title": "선호 스타일 선택",
+    "subtitle": "원하는 스타일을 최대 3개까지 선택해주세요. (현재: {count}/3)",
+    "maxError": "최대 3개까지 선택 가능합니다.",
+    "minError": "최소 1개 이상 선택해주세요.",
+    "styles": {
+      "casual": {
+        "title": "캐주얼",
+        "description": "편안하고 자연스러운 스타일"
+      },
+      "business": {
+        "title": "비즈니스",
+        "description": "세련되고 전문적인 스타일"
+      },
+      "street": {
+        "title": "스트리트",
+        "description": "힙하고 개성있는 스타일"
+      },
+      "minimal": {
+        "title": "미니멀",
+        "description": "심플하고 깔끔한 스타일"
+      },
+      "vintage": {
+        "title": "빈티지",
+        "description": "레트로하고 클래식한 스타일"
+      },
+      "sporty": {
+        "title": "스포티",
+        "description": "활동적이고 역동적인 스타일"
+      }
+    }
+  },
+  "tpo": {
+    "title": "착용 상황 선택 (TPO)",
+    "subtitle": "언제, 어디서, 어떤 상황에 착용할지 선택해주세요.",
+    "time": "시간대 (Time)",
+    "place": "장소 (Place)",
+    "occasion": "상황 (Occasion)",
+    "timeHelp": "시간대에 따라 적절한 컬러와 스타일을 추천합니다.",
+    "placeHelp": "장소에 맞는 복장 격식을 고려합니다.",
+    "occasionHelp": "상황에 어울리는 스타일을 제안합니다.",
+    "times": {
+      "morning": "아침 (06:00 - 12:00)",
+      "afternoon": "점심 (12:00 - 18:00)",
+      "evening": "저녁 (18:00 - 22:00)",
+      "night": "밤 (22:00 - 06:00)"
+    },
+    "places": {
+      "indoor": "실내 - 일반적인 실내 공간",
+      "outdoor": "실외 - 야외 공간",
+      "office": "사무실 - 업무 공간",
+      "cafe": "카페 - 카페/레스토랑",
+      "club": "클럽 - 나이트클럽/바",
+      "restaurant": "레스토랑 - 고급 레스토랑"
+    },
+    "occasions": {
+      "date": "데이트 - 연인과의 만남",
+      "meeting": "회의 - 비즈니스 미팅",
+      "party": "파티 - 파티/행사",
+      "exercise": "운동 - 운동/액티비티",
+      "shopping": "쇼핑 - 쇼핑/외출",
+      "daily": "일상 - 평범한 일상"
+    }
+  },
+  "bodyConcern": {
+    "title": "신체 고민 사항",
+    "subtitle": "커버하고 싶은 신체적 특징이 있다면 선택해주세요. (선택사항)",
+    "tip": "💡 선택하신 고민 사항을 바탕으로 체형을 보완하는 스타일링 팁을 제공합니다.",
+    "submit": "AI 코디 분석 시작",
+    "concerns": {
+      "shortHeight": {
+        "title": "키가 작음",
+        "description": "키가 작아 보이는 것이 고민"
+      },
+      "shortLegs": {
+        "title": "다리가 짧음",
+        "description": "다리 길이가 짧아 보임"
+      },
+      "broadShoulders": {
+        "title": "어깨가 넓음",
+        "description": "어깨가 넓어 보이는 것이 고민"
+      },
+      "upperBody": {
+        "title": "상체 비만",
+        "description": "상체가 통통해 보임"
+      },
+      "lowerBody": {
+        "title": "하체 비만",
+        "description": "하체가 통통해 보임"
+      },
+      "shortArms": {
+        "title": "팔이 짧음",
+        "description": "팔 길이가 짧아 보임"
+      },
+      "none": {
+        "title": "특별한 고민 없음",
+        "description": "신체 비율에 만족함"
+      }
+    }
+  },
+  "loading": {
+    "title": "AI가 분석하고 있습니다...",
+    "subtitle": "최적의 코디네이션을 찾고 있습니다. 잠시만 기다려주세요."
+  },
+  "error": {
+    "title": "오류 발생",
+    "backButton": "처음으로 돌아가기"
+  },
+  "result": {
+    "title": "AI 코디 분석 결과",
+    "subtitle": "당신을 위한 맞춤 스타일링 가이드입니다",
+    "download": "이미지 저장",
+    "share": "공유하기",
+    "reset": "새로 분석하기",
+    "score": "코디 점수",
+    "outOf": "/ 100점",
+    "overallComment": "종합 평가",
+    "stylingTips": "스타일링 팁",
+    "accessories": "추천 액세서리",
+    "colorPalette": "추천 컬러 팔레트",
+    "colorHelp": "이 색상들을 메인 컬러나 포인트 컬러로 활용해보세요.",
+    "grades": {
+      "perfect": "완벽한 코디네이션입니다! 👏",
+      "excellent": "훌륭한 스타일입니다! ✨",
+      "good": "좋은 코디입니다. 약간의 개선으로 더 완벽해집니다!",
+      "fair": "괜찮은 스타일입니다. 몇 가지 조정이 필요합니다.",
+      "needsWork": "개선의 여지가 많습니다. 아래 팁을 참고해주세요!"
+    }
+  }
+}

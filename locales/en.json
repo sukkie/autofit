@@ -1,0 +1,235 @@
+{
+  "common": {
+    "next": "Next",
+    "prev": "Previous",
+    "required": "Required",
+    "optional": "Optional",
+    "select": "Please select",
+    "loading": "Loading...",
+    "error": "Error"
+  },
+  "header": {
+    "title": "AutoFit",
+    "subtitle": "AI Virtual Coordination",
+    "poweredBy": "Powered by Google Vertex AI"
+  },
+  "footer": {
+    "copyright": "© 2024 AutoFit. All rights reserved.",
+    "description": "AI-based fashion coordination service | Your data is never stored"
+  },
+  "landing": {
+    "hero": {
+      "title1": "Your Personal",
+      "title2": "AI Fashion Coordinator",
+      "subtitle1": "Complete styling guide in just 5 minutes",
+      "subtitle2": "We analyze your body type, skin tone, and style to suggest the perfect outfit",
+      "cta": "Start for Free",
+      "features": "✨ No Sign-up · 100% Free · No Data Storage"
+    },
+    "features": {
+      "analysis": {
+        "title": "Accurate Analysis",
+        "description": "Scientific style analysis considering body proportions and skin tone"
+      },
+      "color": {
+        "title": "Color Matching",
+        "description": "Optimal color palette recommendations for you"
+      },
+      "guide": {
+        "title": "Style Guide",
+        "description": "Specific coordination advice for every occasion"
+      }
+    },
+    "howItWorks": {
+      "title": "How It Works?",
+      "step1": {
+        "title": "Body Info",
+        "description": "Enter height, weight, body type"
+      },
+      "step2": {
+        "title": "Upload Photo",
+        "description": "Take full body photo"
+      },
+      "step3": {
+        "title": "Choose Style",
+        "description": "Select preferred styles"
+      },
+      "step4": {
+        "title": "Set Context",
+        "description": "Choose occasion"
+      },
+      "step5": {
+        "title": "View Results",
+        "description": "Get styling guide"
+      }
+    },
+    "cta": {
+      "title": "Start Now",
+      "subtitle": "Your personal styling guide powered by AI",
+      "button": "Start Free Analysis"
+    }
+  },
+  "steps": {
+    "bodyInfo": "Body Info",
+    "photo": "Photo",
+    "styleOption": "Style",
+    "tpo": "TPO",
+    "bodyConcern": "Concerns"
+  },
+  "bodyInfo": {
+    "title": "Enter Body Information",
+    "subtitle": "Please enter your body information for accurate coordination.",
+    "height": "Height (cm)",
+    "weight": "Weight (kg)",
+    "bodyType": "Body Type",
+    "skinTone": "Skin Tone",
+    "bodyTypes": {
+      "slim": "Slim - Thin body type",
+      "normal": "Normal - Average body type",
+      "chubby": "Chubby - Fuller body type",
+      "muscular": "Muscular - Athletic body type"
+    },
+    "skinTones": {
+      "cool": "Cool Tone - Cool undertones",
+      "warm": "Warm Tone - Warm undertones",
+      "neutral": "Neutral - Neutral undertones"
+    }
+  },
+  "photoUpload": {
+    "title": "Upload Photo",
+    "subtitle": "Please upload a full body photo. AI will provide more accurate analysis.",
+    "dragDrop": "Click or drag file to upload",
+    "fileTypes": "JPEG, PNG, WEBP (Max 10MB)",
+    "selectFile": "Select File",
+    "remove": "Remove Image"
+  },
+  "styleOption": {
+    "title": "Select Preferred Styles",
+    "subtitle": "Select up to 3 styles you prefer. (Current: {count}/3)",
+    "maxError": "You can select up to 3 styles.",
+    "minError": "Please select at least 1 style.",
+    "styles": {
+      "casual": {
+        "title": "Casual",
+        "description": "Comfortable and natural style"
+      },
+      "business": {
+        "title": "Business",
+        "description": "Sophisticated and professional style"
+      },
+      "street": {
+        "title": "Street",
+        "description": "Hip and unique style"
+      },
+      "minimal": {
+        "title": "Minimal",
+        "description": "Simple and clean style"
+      },
+      "vintage": {
+        "title": "Vintage",
+        "description": "Retro and classic style"
+      },
+      "sporty": {
+        "title": "Sporty",
+        "description": "Active and dynamic style"
+      }
+    }
+  },
+  "tpo": {
+    "title": "Select Occasion (TPO)",
+    "subtitle": "Please select when, where, and what situation you'll wear this outfit.",
+    "time": "Time",
+    "place": "Place",
+    "occasion": "Occasion",
+    "timeHelp": "We'll recommend appropriate colors and styles based on the time of day.",
+    "placeHelp": "We consider dress code appropriate for the location.",
+    "occasionHelp": "We suggest styles that match the occasion.",
+    "times": {
+      "morning": "Morning (06:00 - 12:00)",
+      "afternoon": "Afternoon (12:00 - 18:00)",
+      "evening": "Evening (18:00 - 22:00)",
+      "night": "Night (22:00 - 06:00)"
+    },
+    "places": {
+      "indoor": "Indoor - General indoor spaces",
+      "outdoor": "Outdoor - Outdoor spaces",
+      "office": "Office - Work environment",
+      "cafe": "Cafe - Cafe/Restaurant",
+      "club": "Club - Nightclub/Bar",
+      "restaurant": "Restaurant - Fine dining"
+    },
+    "occasions": {
+      "date": "Date - Meeting with partner",
+      "meeting": "Meeting - Business meeting",
+      "party": "Party - Party/Event",
+      "exercise": "Exercise - Sports/Activity",
+      "shopping": "Shopping - Shopping/Outing",
+      "daily": "Daily - Everyday life"
+    }
+  },
+  "bodyConcern": {
+    "title": "Body Concerns",
+    "subtitle": "Select physical features you'd like to cover. (Optional)",
+    "tip": "💡 We'll provide styling tips to complement your body type based on your selections.",
+    "submit": "Start AI Analysis",
+    "concerns": {
+      "shortHeight": {
+        "title": "Short Height",
+        "description": "Concerned about appearing short"
+      },
+      "shortLegs": {
+        "title": "Short Legs",
+        "description": "Legs appear short"
+      },
+      "broadShoulders": {
+        "title": "Broad Shoulders",
+        "description": "Concerned about wide shoulders"
+      },
+      "upperBody": {
+        "title": "Upper Body Weight",
+        "description": "Upper body appears fuller"
+      },
+      "lowerBody": {
+        "title": "Lower Body Weight",
+        "description": "Lower body appears fuller"
+      },
+      "shortArms": {
+        "title": "Short Arms",
+        "description": "Arms appear short"
+      },
+      "none": {
+        "title": "No Concerns",
+        "description": "Satisfied with body proportions"
+      }
+    }
+  },
+  "loading": {
+    "title": "AI is analyzing...",
+    "subtitle": "Finding the best coordination for you. Please wait a moment."
+  },
+  "error": {
+    "title": "Error Occurred",
+    "backButton": "Back to Start"
+  },
+  "result": {
+    "title": "AI Coordination Analysis Results",
+    "subtitle": "Your personalized styling guide",
+    "download": "Save Image",
+    "share": "Share",
+    "reset": "New Analysis",
+    "score": "Coordination Score",
+    "outOf": "/ 100",
+    "overallComment": "Overall Assessment",
+    "stylingTips": "Styling Tips",
+    "accessories": "Recommended Accessories",
+    "colorPalette": "Recommended Color Palette",
+    "colorHelp": "Use these colors as main or accent colors.",
+    "grades": {
+      "perfect": "Perfect coordination! 👏",
+      "excellent": "Excellent style! ✨",
+      "good": "Good coordination. A few tweaks will make it perfect!",
+      "fair": "Decent style. Some adjustments needed.",
+      "needsWork": "Room for improvement. Please check the tips below!"
+    }
+  }
+}

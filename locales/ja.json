@@ -1,0 +1,235 @@
+{
+  "common": {
+    "next": "次へ",
+    "prev": "戻る",
+    "required": "必須",
+    "optional": "任意",
+    "select": "選択してください",
+    "loading": "読み込み中...",
+    "error": "エラー"
+  },
+  "header": {
+    "title": "オートフィット",
+    "subtitle": "AIバーチャルコーディネーション",
+    "poweredBy": "Powered by Google Vertex AI"
+  },
+  "footer": {
+    "copyright": "© 2024 AutoFit. All rights reserved.",
+    "description": "AIベースのファッションコーディネーションサービス | 個人情報は保存されません"
+  },
+  "landing": {
+    "hero": {
+      "title1": "あなただけの",
+      "title2": "AIファッションコーディネーター",
+      "subtitle1": "わずか5分で完成するカスタムスタイリングガイド",
+      "subtitle2": "体型、肌の色、スタイルを分析して最適なコーディネートを提案します",
+      "cta": "無料で始める",
+      "features": "✨ 登録不要 · 100%無料 · 個人情報保存なし"
+    },
+    "features": {
+      "analysis": {
+        "title": "正確な分析",
+        "description": "体型と肌色を考慮した科学的なスタイル分析"
+      },
+      "color": {
+        "title": "カラーマッチング",
+        "description": "あなたに似合う最適なカラーパレットの提案"
+      },
+      "guide": {
+        "title": "スタイルガイド",
+        "description": "TPO別の具体的なコーディネートアドバイス"
+      }
+    },
+    "howItWorks": {
+      "title": "どのように機能しますか？",
+      "step1": {
+        "title": "身体情報",
+        "description": "身長、体重、体型を入力"
+      },
+      "step2": {
+        "title": "写真アップロード",
+        "description": "全身写真を撮影"
+      },
+      "step3": {
+        "title": "スタイル選択",
+        "description": "好みのスタイルを選択"
+      },
+      "step4": {
+        "title": "状況設定",
+        "description": "着用シーンを選択"
+      },
+      "step5": {
+        "title": "結果確認",
+        "description": "カスタムコーディネートガイド"
+      }
+    },
+    "cta": {
+      "title": "今すぐ始めましょう",
+      "subtitle": "AIが分析するあなただけのスタイリングガイド",
+      "button": "無料分析を開始"
+    }
+  },
+  "steps": {
+    "bodyInfo": "身体情報",
+    "photo": "写真",
+    "styleOption": "スタイル",
+    "tpo": "TPO",
+    "bodyConcern": "お悩み"
+  },
+  "bodyInfo": {
+    "title": "身体情報入力",
+    "subtitle": "正確なコーディネーションのために身体情報を入力してください。",
+    "height": "身長 (cm)",
+    "weight": "体重 (kg)",
+    "bodyType": "体型",
+    "skinTone": "肌色",
+    "bodyTypes": {
+      "slim": "スリム - 痩せ型",
+      "normal": "標準 - 普通体型",
+      "chubby": "ぽっちゃり - ふくよか体型",
+      "muscular": "がっちり - 筋肉質体型"
+    },
+    "skinTones": {
+      "cool": "クールトーン - 冷たい色調",
+      "warm": "ウォームトーン - 暖かい色調",
+      "neutral": "ニュートラル - 中間色調"
+    }
+  },
+  "photoUpload": {
+    "title": "写真アップロード",
+    "subtitle": "全身写真をアップロードしてください。AIがより正確な分析を提供します。",
+    "dragDrop": "クリックまたはファイルをドラッグしてアップロード",
+    "fileTypes": "JPEG, PNG, WEBP (最大10MB)",
+    "selectFile": "ファイルを選択",
+    "remove": "画像を削除"
+  },
+  "styleOption": {
+    "title": "好みのスタイル選択",
+    "subtitle": "希望するスタイルを最大3つまで選択してください。 (現在: {count}/3)",
+    "maxError": "最大3つまで選択できます。",
+    "minError": "最低1つ以上選択してください。",
+    "styles": {
+      "casual": {
+        "title": "カジュアル",
+        "description": "快適で自然なスタイル"
+      },
+      "business": {
+        "title": "ビジネス",
+        "description": "洗練されたプロフェッショナルなスタイル"
+      },
+      "street": {
+        "title": "ストリート",
+        "description": "ヒップで個性的なスタイル"
+      },
+      "minimal": {
+        "title": "ミニマル",
+        "description": "シンプルで清潔なスタイル"
+      },
+      "vintage": {
+        "title": "ヴィンテージ",
+        "description": "レトロでクラシックなスタイル"
+      },
+      "sporty": {
+        "title": "スポーティー",
+        "description": "活動的でダイナミックなスタイル"
+      }
+    }
+  },
+  "tpo": {
+    "title": "着用シーン選択 (TPO)",
+    "subtitle": "いつ、どこで、どのような状況で着用するか選択してください。",
+    "time": "時間帯 (Time)",
+    "place": "場所 (Place)",
+    "occasion": "状況 (Occasion)",
+    "timeHelp": "時間帯に応じて適切なカラーとスタイルを提案します。",
+    "placeHelp": "場所に合わせた服装のフォーマルさを考慮します。",
+    "occasionHelp": "状況に合ったスタイルを提案します。",
+    "times": {
+      "morning": "朝 (06:00 - 12:00)",
+      "afternoon": "昼 (12:00 - 18:00)",
+      "evening": "夕方 (18:00 - 22:00)",
+      "night": "夜 (22:00 - 06:00)"
+    },
+    "places": {
+      "indoor": "屋内 - 一般的な屋内スペース",
+      "outdoor": "屋外 - 野外スペース",
+      "office": "オフィス - 職場環境",
+      "cafe": "カフェ - カフェ/レストラン",
+      "club": "クラブ - ナイトクラブ/バー",
+      "restaurant": "レストラン - 高級レストラン"
+    },
+    "occasions": {
+      "date": "デート - 恋人との会合",
+      "meeting": "会議 - ビジネスミーティング",
+      "party": "パーティー - パーティー/イベント",
+      "exercise": "運動 - スポーツ/アクティビティ",
+      "shopping": "ショッピング - 買い物/外出",
+      "daily": "日常 - 日常生活"
+    }
+  },
+  "bodyConcern": {
+    "title": "身体のお悩み",
+    "subtitle": "カバーしたい身体的特徴があれば選択してください。 (任意)",
+    "tip": "💡 選択したお悩みに基づいて体型をカバーするスタイリングのヒントを提供します。",
+    "submit": "AI分析を開始",
+    "concerns": {
+      "shortHeight": {
+        "title": "身長が低い",
+        "description": "身長が低く見えることが悩み"
+      },
+      "shortLegs": {
+        "title": "脚が短い",
+        "description": "脚の長さが短く見える"
+      },
+      "broadShoulders": {
+        "title": "肩幅が広い",
+        "description": "肩幅が広く見えることが悩み"
+      },
+      "upperBody": {
+        "title": "上半身太り",
+        "description": "上半身がふくよかに見える"
+      },
+      "lowerBody": {
+        "title": "下半身太り",
+        "description": "下半身がふくよかに見える"
+      },
+      "shortArms": {
+        "title": "腕が短い",
+        "description": "腕の長さが短く見える"
+      },
+      "none": {
+        "title": "特に悩みなし",
+        "description": "体型に満足している"
+      }
+    }
+  },
+  "loading": {
+    "title": "AIが分析しています...",
+    "subtitle": "最適なコーディネーションを探しています。少々お待ちください。"
+  },
+  "error": {
+    "title": "エラーが発生しました",
+    "backButton": "最初に戻る"
+  },
+  "result": {
+    "title": "AIコーディネーション分析結果",
+    "subtitle": "あなたのためのカスタムスタイリングガイド",
+    "download": "画像を保存",
+    "share": "共有",
+    "reset": "新しい分析",
+    "score": "コーディネートスコア",
+    "outOf": "/ 100点",
+    "overallComment": "総合評価",
+    "stylingTips": "スタイリングのヒント",
+    "accessories": "おすすめアクセサリー",
+    "colorPalette": "おすすめカラーパレット",
+    "colorHelp": "これらの色をメインカラーまたはアクセントカラーとして活用してください。",
+    "grades": {
+      "perfect": "完璧なコーディネーションです！ 👏",
+      "excellent": "素晴らしいスタイルです！ ✨",
+      "good": "良いコーディネートです。少しの改善でより完璧になります！",
+      "fair": "まずまずのスタイルです。いくつかの調整が必要です。",
+      "needsWork": "改善の余地があります。以下のヒントを参考にしてください！"
+    }
+  }
+}
