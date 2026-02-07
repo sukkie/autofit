@@ -79,10 +79,16 @@
   "bodyInfo": {
     "title": "Enter Body Information",
     "subtitle": "Please enter your body information for accurate coordination.",
+    "gender": "Gender",
     "height": "Height (cm)",
     "weight": "Weight (kg)",
     "bodyType": "Body Type",
     "skinTone": "Skin Tone",
+    "skinToneTip": "💡 Tip: If your wrist veins appear blue, you're cool-toned; if green, warm-toned",
+    "genders": {
+      "male": "Male",
+      "female": "Female"
+    },
     "bodyTypes": {
       "slim": "Slim - Thin body type",
       "normal": "Normal - Average body type",
@@ -90,18 +96,21 @@
       "muscular": "Muscular - Athletic body type"
     },
     "skinTones": {
-      "cool": "Cool Tone - Cool undertones",
-      "warm": "Warm Tone - Warm undertones",
-      "neutral": "Neutral - Neutral undertones"
+      "cool": "Cool Tone - Blue/Pink undertones",
+      "warm": "Warm Tone - Yellow/Golden undertones",
+      "neutral": "Neutral - Between cool and warm"
     }
   },
   "photoUpload": {
     "title": "Upload Photo",
-    "subtitle": "Please upload a full body photo. AI will provide more accurate analysis.",
+    "subtitle": "Please upload a full body photo wearing clothes suitable for the selected occasion. AI will analyze your current style and provide more accurate recommendations.",
     "dragDrop": "Click or drag file to upload",
     "fileTypes": "JPEG, PNG, WEBP (Max 10MB)",
     "selectFile": "Select File",
-    "remove": "Remove Image"
+    "remove": "Remove Image",
+    "includeFace": "Include Face (Recommended)",
+    "faceIncluded": "✅ With Face: Accurately analyzes skin tone and generates outfit images with your face.",
+    "faceExcluded": "⚠️ Without Face: Photo from neck down. Uses input skin tone info and generates images with a virtual face."
   },
   "styleOption": {
     "title": "Select Preferred Styles",
@@ -171,7 +180,8 @@
     "title": "Body Concerns",
     "subtitle": "Select physical features you'd like to cover. (Optional)",
     "tip": "💡 We'll provide styling tips to complement your body type based on your selections.",
-    "submit": "Start AI Analysis",
+    "submit": "✨ Generate AI Outfit Image",
+    "submitting": "Generating AI Image...",
     "concerns": {
       "shortHeight": {
         "title": "Short Height",

@@ -10,8 +10,10 @@ import { TPOSelectionStep } from '@/components/forms/TPOSelectionStep';
 import { BodyConcernStep } from '@/components/forms/BodyConcernStep';
 import { ResultDashboard } from '@/components/result/ResultDashboard';
 import { Card } from '@/components/ui/Card';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function HomePage() {
+  const { t } = useLanguage();
   const [showLanding, setShowLanding] = useState(true);
   const form = useCoordinateForm();
 
@@ -29,9 +31,9 @@ export default function HomePage() {
   const StepIndicator = () => {
     const steps = [
       { id: 'bodyInfo', label: '신체정보' },
+      { id: 'tpo', label: '착용상황' },
       { id: 'photo', label: '사진' },
       { id: 'styleOption', label: '스타일' },
-      { id: 'tpo', label: 'TPO' },
       { id: 'bodyConcern', label: '고민사항' },
     ];
 
@@ -82,10 +84,10 @@ export default function HomePage() {
         <Card className="text-center py-16">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4" />
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            AI가 분석하고 있습니다...
+            {t.loading.title}
           </h2>
           <p className="text-gray-600">
-            최적의 코디네이션을 찾고 있습니다. 잠시만 기다려주세요.
+            {t.loading.subtitle}
           </p>
         </Card>
       </div>
@@ -98,13 +100,16 @@ export default function HomePage() {
       <div className="max-w-2xl mx-auto">
         <Card className="text-center py-16 border-red-200 bg-red-50">
           <div className="text-red-600 text-5xl mb-4">⚠️</div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">오류 발생</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">{t.error.title}</h2>
           <p className="text-gray-600 mb-6">{form.error}</p>
           <button
-            onClick={() => form.goToStep('bodyInfo')}
+            onClick={() => {
+              form.resetForm();
+              setShowLanding(true);
+            }}
             className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
-            처음으로 돌아가기
+            {t.error.backButton}
           </button>
         </Card>
       </div>
@@ -117,6 +122,12 @@ export default function HomePage() {
       <ResultDashboard
         result={form.result}
         previewUrl={form.previewUrl}
+        userPhoto={form.userPhoto}
+        bodyInfo={form.bodyInfo}
+        styleOptions={form.styleOptions}
+        tpo={form.tpo}
+        bodyConcerns={form.bodyConcerns}
+        includeFace={form.includeFace}
         onReset={() => {
           form.resetForm();
           setShowLanding(true);
@@ -141,10 +152,21 @@ export default function HomePage() {
         />
       )}
 
+      {form.currentStep === 'tpo' && (
+        <TPOSelectionStep
+          onNext={(tpo) => {
+            form.setTPO(tpo);
+            form.nextStep();
+          }}
+          onPrev={form.prevStep}
+          initialData={form.tpo}
+        />
+      )}
+
       {form.currentStep === 'photo' && (
         <PhotoUploadStep
-          onNext={(file, previewUrl) => {
-            form.setUserPhoto(file, previewUrl);
+          onNext={(file, previewUrl, includeFace) => {
+            form.setUserPhoto(file, previewUrl, includeFace);
             form.nextStep();
           }}
           onPrev={form.prevStep}
@@ -162,17 +184,6 @@ export default function HomePage() {
         />
       )}
 
-      {form.currentStep === 'tpo' && (
-        <TPOSelectionStep
-          onNext={(tpo) => {
-            form.setTPO(tpo);
-            form.nextStep();
-          }}
-          onPrev={form.prevStep}
-          initialData={form.tpo}
-        />
-      )}
-
       {form.currentStep === 'bodyConcern' && (
         <BodyConcernStep
           onNext={(concerns) => {
@@ -181,6 +192,7 @@ export default function HomePage() {
           onPrev={form.prevStep}
           onSubmit={form.submitForm}
           initialData={form.bodyConcerns}
+          isLoading={form.isLoading}
         />
       )}
     </div>

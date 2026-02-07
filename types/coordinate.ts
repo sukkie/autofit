@@ -1,5 +1,6 @@
 // 신체 정보 타입
 export interface BodyInfo {
+  gender: '남성' | '여성';
   height: number; // cm
   weight: number; // kg
   bodyType: '슬림' | '표준' | '통통' | '건장함';
@@ -46,6 +47,7 @@ export interface CoordinateRequest {
   styleOptions: StyleOption[];
   tpo: TPO;
   bodyConcerns: BodyConcern[];
+  includeFace: boolean; // 얼굴 포함 여부
 }
 
 // 코디네이션 요청 타입 (서버)
@@ -56,18 +58,42 @@ export interface CoordinateRequestServer {
   styleOptions: StyleOption[];
   tpo: TPO;
   bodyConcerns: BodyConcern[];
+  includeFace: boolean; // 얼굴 포함 여부
 }
 
 // 코디네이션 응답 타입
 export interface CoordinateResponse {
   success: boolean;
   data?: {
-    generatedImage: string; // Base64 인코딩된 이미지
     score: number; // 0-100점
     stylingTips: string[]; // 스타일링 팁 (최대 5개)
     accessories: Accessory[]; // 추천 액세서리 (최대 3개)
     colorPalette: string[]; // 추천 컬러 (Hex 코드, 최대 5개)
     overallComment: string; // 전체 코멘트
+  };
+  error?: {
+    code: string;
+    message: string;
+  };
+}
+
+// 코디 이미지 생성 요청 타입
+export interface GenerateCoordinateImageRequest {
+  bodyInfo: BodyInfo;
+  styleOptions: StyleOption[];
+  tpo: TPO;
+  bodyConcerns: BodyConcern[];
+  stylingTips: string[];
+  accessories: Accessory[];
+  colorPalette: string[];
+  includeFace: boolean; // 얼굴 포함 여부
+}
+
+// 코디 이미지 생성 응답 타입
+export interface GenerateCoordinateImageResponse {
+  success: boolean;
+  data?: {
+    imageUrl: string; // 생성된 이미지 URL 또는 Base64
   };
   error?: {
     code: string;
@@ -89,6 +115,7 @@ export interface FormState {
   currentStep: FormStep;
   userPhoto: File | null;
   previewUrl: string | null;
+  includeFace: boolean; // 얼굴 포함 여부
   bodyInfo: BodyInfo | null;
   styleOptions: StyleOption[];
   tpo: TPO | null;

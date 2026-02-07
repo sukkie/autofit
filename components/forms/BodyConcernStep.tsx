@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Check } from 'lucide-react';
+import { Check, Sparkles, Image } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
+import { useLanguage } from '@/contexts/LanguageContext';
 import type { BodyConcern } from '@/types/coordinate';
 import { cn } from '@/lib/utils';
 
@@ -12,25 +13,28 @@ interface BodyConcernStepProps {
   onPrev: () => void;
   onSubmit: () => void;
   initialData?: BodyConcern[];
+  isLoading?: boolean;
 }
-
-const BODY_CONCERNS: Array<{ value: BodyConcern; label: string; description: string }> = [
-  { value: '키가 작음', label: '키가 작음', description: '키가 작아 보이는 것이 고민' },
-  { value: '다리가 짧음', label: '다리가 짧음', description: '다리 길이가 짧아 보임' },
-  { value: '어깨가 넓음', label: '어깨가 넓음', description: '어깨가 넓어 보이는 것이 고민' },
-  { value: '상체 비만', label: '상체 비만', description: '상체가 통통해 보임' },
-  { value: '하체 비만', label: '하체 비만', description: '하체가 통통해 보임' },
-  { value: '팔이 짧음', label: '팔이 짧음', description: '팔 길이가 짧아 보임' },
-  { value: '없음', label: '특별한 고민 없음', description: '신체 비율에 만족함' },
-];
 
 export function BodyConcernStep({
   onNext,
   onPrev,
   onSubmit,
   initialData = [],
+  isLoading = false,
 }: BodyConcernStepProps) {
+  const { t } = useLanguage();
   const [selectedConcerns, setSelectedConcerns] = useState<BodyConcern[]>(initialData);
+
+  const BODY_CONCERNS: Array<{ value: BodyConcern; label: string; description: string }> = [
+    { value: '키가 작음', label: t.bodyConcern.concerns.shortHeight.title, description: t.bodyConcern.concerns.shortHeight.description },
+    { value: '다리가 짧음', label: t.bodyConcern.concerns.shortLegs.title, description: t.bodyConcern.concerns.shortLegs.description },
+    { value: '어깨가 넓음', label: t.bodyConcern.concerns.broadShoulders.title, description: t.bodyConcern.concerns.broadShoulders.description },
+    { value: '상체 비만', label: t.bodyConcern.concerns.upperBody.title, description: t.bodyConcern.concerns.upperBody.description },
+    { value: '하체 비만', label: t.bodyConcern.concerns.lowerBody.title, description: t.bodyConcern.concerns.lowerBody.description },
+    { value: '팔이 짧음', label: t.bodyConcern.concerns.shortArms.title, description: t.bodyConcern.concerns.shortArms.description },
+    { value: '없음', label: t.bodyConcern.concerns.none.title, description: t.bodyConcern.concerns.none.description },
+  ];
 
   // 옵션 토글
   const toggleConcern = (concern: BodyConcern) => {
@@ -62,10 +66,10 @@ export function BodyConcernStep({
     <Card className="max-w-3xl mx-auto">
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">
-          신체 고민 사항
+          {t.bodyConcern.title}
         </h2>
         <p className="text-gray-600">
-          커버하고 싶은 신체적 특징이 있다면 선택해주세요. (선택사항)
+          {t.bodyConcern.subtitle}
         </p>
       </div>
 
@@ -112,22 +116,41 @@ export function BodyConcernStep({
 
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
         <p className="text-sm text-blue-800">
-          💡 선택하신 고민 사항을 바탕으로 체형을 보완하는 스타일링 팁을 제공합니다.
+          {t.bodyConcern.tip}
         </p>
       </div>
 
       <div className="flex justify-between gap-4 pt-4">
-        <Button type="button" onClick={onPrev} variant="ghost">
-          이전
+        <Button type="button" onClick={onPrev} variant="ghost" disabled={isLoading}>
+          {t.common.prev}
         </Button>
-        <Button
+        <button
           type="button"
           onClick={handleSubmit}
-          variant="primary"
-          size="lg"
+          disabled={isLoading}
+          className={cn(
+            "relative px-8 py-4 rounded-xl font-bold text-lg",
+            "bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600",
+            "text-white shadow-lg hover:shadow-xl",
+            "transform transition-all duration-200",
+            "hover:scale-105 active:scale-95",
+            "disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none",
+            "flex items-center gap-3"
+          )}
         >
-          AI 코디 분석 시작
-        </Button>
+          {isLoading ? (
+            <>
+              <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent" />
+              <span>{t.bodyConcern.submitting}</span>
+            </>
+          ) : (
+            <>
+              <Sparkles className="w-6 h-6 animate-pulse" />
+              <span>{t.bodyConcern.submit}</span>
+              <Image className="w-6 h-6" />
+            </>
+          )}
+        </button>
       </div>
     </Card>
   );

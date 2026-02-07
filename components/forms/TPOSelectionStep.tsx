@@ -39,10 +39,13 @@ export function TPOSelectionStep({ onNext, onPrev, initialData }: TPOSelectionSt
     <Card className="max-w-2xl mx-auto">
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">
-          착용 상황 선택 (TPO)
+          어디에서 입을 옷인가요?
         </h2>
         <p className="text-gray-600">
           언제, 어디서, 어떤 상황에 착용할지 선택해주세요.
+        </p>
+        <p className="text-sm text-gray-500 mt-1">
+          상황에 맞는 옷을 입고 사진을 찍으면 더 정확한 분석을 받을 수 있습니다.
         </p>
       </div>
 

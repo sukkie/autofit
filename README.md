@@ -16,7 +16,10 @@
 - **Framework**: Next.js 14 (App Router)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
-- **AI**: Google Vertex AI (Gemini 1.5 Pro)
+- **AI**: Google Vertex AI
+  - Gemini 2.5 Flash (스타일 분석)
+  - Gemini 2.5 Flash Image (코디 이미지 생성)
+- **Image Processing**: Sharp (이미지 압축)
 - **Form**: React Hook Form
 - **Validation**: Zod
 - **Animation**: Framer Motion
@@ -115,12 +118,46 @@ autofit/
 
 ## 📝 사용 방법
 
-1. **사진 업로드**: 전신 사진을 업로드 (JPEG, PNG, WEBP, 최대 10MB)
-2. **신체 정보**: 신장, 체중, 체형, 피부톤 입력
-3. **스타일 선택**: 선호하는 스타일 최대 3개 선택
-4. **TPO 설정**: 시간대, 장소, 상황 선택
+1. **신체 정보**: 신장, 체중, 체형, 피부톤 입력
+2. **착용 상황**: 언제, 어디서, 어떤 상황에 입을지 선택
+3. **사진 업로드**: 상황에 맞는 옷을 입고 전신 사진 업로드 (JPEG, PNG, WEBP, 최대 10MB)
+4. **스타일 선택**: 선호하는 스타일 최대 3개 선택
 5. **고민 사항**: 커버하고 싶은 신체적 특징 선택 (선택사항)
 6. **결과 확인**: AI 분석 결과 및 스타일링 팁 확인
+7. **코디 생성**: (선택) 추천 코디를 입은 AI 이미지 생성
+
+## 🚀 배포
+
+### Cloudflare Pages 호환성
+
+**⚠️ 주의**: 현재 이 프로젝트는 **Cloudflare Pages와 호환되지 않습니다**.
+
+- `@google-cloud/vertexai`는 Node.js 런타임 필요
+- `sharp`는 네이티브 바이너리로 Workers에서 작동 안 함
+- Google Cloud 인증 키 파일 처리 제한
+
+### Vercel 배포 (권장 ⭐)
+
+Vercel은 Next.js, Vertex AI, sharp를 완벽히 지원합니다.
+
+#### 방법 1: Vercel CLI
+
+```bash
+npm i -g vercel
+vercel
+```
+
+#### 방법 2: GitHub 연동
+
+1. https://vercel.com 에서 프로젝트 import
+2. 환경 변수 설정:
+   - `GOOGLE_CLOUD_PROJECT`
+   - `GOOGLE_CLOUD_LOCATION`
+   - `GOOGLE_CLOUD_IMAGE_LOCATION`
+   - `GOOGLE_APPLICATION_CREDENTIALS_JSON` (JSON 키 전체 내용을 한 줄로)
+3. Deploy 클릭
+
+자세한 내용은 [DEPLOYMENT.md](./DEPLOYMENT.md) 참조
 
 ## 🧪 테스트
 

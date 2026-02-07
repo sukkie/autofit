@@ -5,16 +5,19 @@ import { Upload, X } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { useImageUpload } from '@/hooks/useImageUpload';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface PhotoUploadStepProps {
-  onNext: (file: File, previewUrl: string) => void;
+  onNext: (file: File, previewUrl: string, includeFace: boolean) => void;
   onPrev?: () => void;
 }
 
 export function PhotoUploadStep({ onNext, onPrev }: PhotoUploadStepProps) {
+  const { t } = useLanguage();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { file, previewUrl, error, isUploading, uploadImage, clearImage } =
     useImageUpload();
+  const [includeFace, setIncludeFace] = React.useState(true);
 
   // 파일 선택 핸들러
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,7 +45,7 @@ export function PhotoUploadStep({ onNext, onPrev }: PhotoUploadStepProps) {
   // 다음 단계로
   const handleNext = () => {
     if (file && previewUrl) {
-      onNext(file, previewUrl);
+      onNext(file, previewUrl, includeFace);
     }
   };
 
@@ -50,11 +53,37 @@ export function PhotoUploadStep({ onNext, onPrev }: PhotoUploadStepProps) {
     <Card className="max-w-2xl mx-auto">
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">
-          사진 업로드
+          {t.photoUpload.title}
         </h2>
         <p className="text-gray-600">
-          전신 사진을 업로드해주세요. AI가 더 정확한 분석을 제공합니다.
+          {t.photoUpload.subtitle}
         </p>
+      </div>
+
+      {/* 얼굴 포함 여부 선택 */}
+      <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+        <div className="flex items-start gap-3">
+          <input
+            type="checkbox"
+            id="includeFace"
+            checked={includeFace}
+            onChange={(e) => setIncludeFace(e.target.checked)}
+            className="mt-1 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+          />
+          <div className="flex-1">
+            <label htmlFor="includeFace" className="font-medium text-gray-900 cursor-pointer">
+              {t.photoUpload.includeFace}
+            </label>
+            <div className="mt-1 text-sm text-gray-600">
+              <p className="mb-1">
+                {t.photoUpload.faceIncluded}
+              </p>
+              <p>
+                {t.photoUpload.faceExcluded}
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div
@@ -89,10 +118,10 @@ export function PhotoUploadStep({ onNext, onPrev }: PhotoUploadStepProps) {
           <div className="text-center">
             <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
             <p className="text-gray-700 mb-2">
-              클릭하거나 파일을 드래그하여 업로드
+              {t.photoUpload.dragDrop}
             </p>
             <p className="text-sm text-gray-500 mb-4">
-              JPEG, PNG, WEBP (최대 10MB)
+              {t.photoUpload.fileTypes}
             </p>
             <Button
               type="button"
@@ -100,7 +129,7 @@ export function PhotoUploadStep({ onNext, onPrev }: PhotoUploadStepProps) {
               variant="primary"
               disabled={isUploading}
             >
-              파일 선택
+              {t.photoUpload.selectFile}
             </Button>
           </div>
         )}
@@ -123,7 +152,7 @@ export function PhotoUploadStep({ onNext, onPrev }: PhotoUploadStepProps) {
       <div className="mt-6 flex justify-between gap-4">
         {onPrev && (
           <Button type="button" onClick={onPrev} variant="ghost">
-            이전
+            {t.common.prev}
           </Button>
         )}
         <Button
@@ -133,7 +162,7 @@ export function PhotoUploadStep({ onNext, onPrev }: PhotoUploadStepProps) {
           size="lg"
           className={!onPrev ? 'ml-auto' : ''}
         >
-          다음 단계
+          {t.common.next}
         </Button>
       </div>
     </Card>

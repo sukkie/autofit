@@ -1,0 +1,14 @@
+{
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "outputDirectory": ".next",
+  "regions": ["icn1"],
+  "env": {
+    "GOOGLE_CLOUD_PROJECT": "@google_cloud_project",
+    "GOOGLE_CLOUD_LOCATION": "@google_cloud_location",
+    "GOOGLE_CLOUD_IMAGE_LOCATION": "@google_cloud_image_location",
+    "GOOGLE_APPLICATION_CREDENTIALS_JSON": "@google_application_credentials_json"
+  }
+}

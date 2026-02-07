@@ -79,10 +79,16 @@
   "bodyInfo": {
     "title": "신체 정보 입력",
     "subtitle": "정확한 코디네이션을 위해 신체 정보를 입력해주세요.",
+    "gender": "성별",
     "height": "신장 (cm)",
     "weight": "체중 (kg)",
     "bodyType": "체형",
     "skinTone": "피부톤",
+    "skinToneTip": "💡 팁: 손목 혈관이 파란색이면 쿨톤, 초록색이면 웜톤입니다",
+    "genders": {
+      "male": "남성",
+      "female": "여성"
+    },
     "bodyTypes": {
       "slim": "슬림 - 마른 체형",
       "normal": "표준 - 보통 체형",
@@ -90,9 +96,9 @@
       "muscular": "건장함 - 근육질 체형"
     },
     "skinTones": {
-      "cool": "쿨톤 - 차가운 톤",
-      "warm": "웜톤 - 따뜻한 톤",
-      "neutral": "중성 - 중간 톤"
+      "cool": "쿨톤 - 푸른빛/분홍빛 피부",
+      "warm": "웜톤 - 노란빛/황금빛 피부",
+      "neutral": "중성 - 쿨톤과 웜톤 중간"
     }
   },
   "photoUpload": {
@@ -101,7 +107,10 @@
     "dragDrop": "클릭하거나 파일을 드래그하여 업로드",
     "fileTypes": "JPEG, PNG, WEBP (최대 10MB)",
     "selectFile": "파일 선택",
-    "remove": "이미지 제거"
+    "remove": "이미지 제거",
+    "includeFace": "얼굴 포함 (권장)",
+    "faceIncluded": "✅ 얼굴 포함 시: 피부톤을 정확히 분석하고, 추천 코디 이미지를 본인 얼굴로 생성합니다.",
+    "faceExcluded": "⚠️ 얼굴 제외 시: 목 아래부터 촬영하세요. 입력한 피부톤 정보로 분석하고, 이미지는 가상 얼굴로 생성됩니다."
   },
   "styleOption": {
     "title": "선호 스타일 선택",
@@ -171,7 +180,8 @@
     "title": "신체 고민 사항",
     "subtitle": "커버하고 싶은 신체적 특징이 있다면 선택해주세요. (선택사항)",
     "tip": "💡 선택하신 고민 사항을 바탕으로 체형을 보완하는 스타일링 팁을 제공합니다.",
-    "submit": "AI 코디 분석 시작",
+    "submit": "✨ AI 코디 이미지 생성하기",
+    "submitting": "AI 이미지 생성 중...",
     "concerns": {
       "shortHeight": {
         "title": "키가 작음",

@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
+import { useLanguage } from '@/contexts/LanguageContext';
 import type { BodyInfo } from '@/types/coordinate';
 
 interface BodyInfoStepProps {
@@ -14,8 +15,10 @@ interface BodyInfoStepProps {
 }
 
 export function BodyInfoStep({ onNext, onPrev, initialData }: BodyInfoStepProps) {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState<BodyInfo>(
     initialData || {
+      gender: '남성',
       height: 170,
       weight: 65,
       bodyType: '표준',
@@ -25,7 +28,17 @@ export function BodyInfoStep({ onNext, onPrev, initialData }: BodyInfoStepProps)
 
   const [errors, setErrors] = useState<Partial<Record<keyof BodyInfo, string>>>({});
 
-  // 입력 변경 핸들러
+  // 숫자 입력 변경 핸들러
+  const handleNumberChange = (field: 'height' | 'weight', value: string) => {
+    const numValue = value === '' ? 0 : Number(value);
+    setFormData((prev) => ({ ...prev, [field]: numValue }));
+    // 에러 초기화
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: undefined }));
+    }
+  };
+
+  // 일반 입력 변경 핸들러
   const handleChange = (field: keyof BodyInfo, value: string | number) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     // 에러 초기화
@@ -62,69 +75,87 @@ export function BodyInfoStep({ onNext, onPrev, initialData }: BodyInfoStepProps)
     <Card className="max-w-2xl mx-auto">
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">
-          신체 정보 입력
+          {t.bodyInfo.title}
         </h2>
         <p className="text-gray-600">
-          정확한 코디네이션을 위해 신체 정보를 입력해주세요.
+          {t.bodyInfo.subtitle}
         </p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
+        <Select
+          label={t.bodyInfo.gender}
+          value={formData.gender}
+          onChange={(e) => handleChange('gender', e.target.value as BodyInfo['gender'])}
+          options={[
+            { value: '남성', label: t.bodyInfo.genders.male },
+            { value: '여성', label: t.bodyInfo.genders.female },
+          ]}
+          required
+        />
+
         <div className="grid grid-cols-2 gap-4">
           <Input
-            label="신장 (cm)"
+            label={t.bodyInfo.height}
             type="number"
-            value={formData.height}
-            onChange={(e) => handleChange('height', parseInt(e.target.value) || 0)}
+            value={formData.height || ''}
+            onChange={(e) => handleNumberChange('height', e.target.value)}
             error={errors.height}
             required
             min={100}
             max={250}
+            step={1}
           />
 
           <Input
-            label="체중 (kg)"
+            label={t.bodyInfo.weight}
             type="number"
-            value={formData.weight}
-            onChange={(e) => handleChange('weight', parseInt(e.target.value) || 0)}
+            value={formData.weight || ''}
+            onChange={(e) => handleNumberChange('weight', e.target.value)}
             error={errors.weight}
             required
             min={30}
             max={200}
+            step={1}
           />
         </div>
 
         <Select
-          label="체형"
+          label={t.bodyInfo.bodyType}
           value={formData.bodyType}
           onChange={(e) => handleChange('bodyType', e.target.value as BodyInfo['bodyType'])}
           options={[
-            { value: '슬림', label: '슬림 - 마른 체형' },
-            { value: '표준', label: '표준 - 보통 체형' },
-            { value: '통통', label: '통통 - 풍만한 체형' },
-            { value: '건장함', label: '건장함 - 근육질 체형' },
+            { value: '슬림', label: t.bodyInfo.bodyTypes.slim },
+            { value: '표준', label: t.bodyInfo.bodyTypes.normal },
+            { value: '통통', label: t.bodyInfo.bodyTypes.chubby },
+            { value: '건장함', label: t.bodyInfo.bodyTypes.muscular },
           ]}
           required
         />
 
-        <Select
-          label="피부톤"
-          value={formData.skinTone}
-          onChange={(e) => handleChange('skinTone', e.target.value as BodyInfo['skinTone'])}
-          options={[
-            { value: '쿨톤', label: '쿨톤 - 차가운 톤' },
-            { value: '웜톤', label: '웜톤 - 따뜻한 톤' },
-            { value: '중성', label: '중성 - 중간 톤' },
-          ]}
-          required
-        />
+        <div>
+          <Select
+            label={t.bodyInfo.skinTone}
+            value={formData.skinTone}
+            onChange={(e) => handleChange('skinTone', e.target.value as BodyInfo['skinTone'])}
+            options={[
+              { value: '쿨톤', label: t.bodyInfo.skinTones.cool },
+              { value: '웜톤', label: t.bodyInfo.skinTones.warm },
+              { value: '중성', label: t.bodyInfo.skinTones.neutral },
+            ]}
+            required
+          />
+          <p className="mt-2 text-sm text-gray-500">
+            {t.bodyInfo.skinToneTip}
+          </p>
+        </div>
 
         <div className="flex justify-between gap-4 pt-4">
           <Button type="button" onClick={onPrev} variant="ghost">
-            이전
+            {t.common.prev}
           </Button>
           <Button type="submit" variant="primary" size="lg">
-            다음 단계
+            {t.common.next}
           </Button>
         </div>
       </form>

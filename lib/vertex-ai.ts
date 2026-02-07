@@ -1,5 +1,6 @@
 import { VertexAI } from '@google-cloud/vertexai';
 import type { CoordinateRequestServer } from '@/types/coordinate';
+import { compressImage } from './image-compression';
 
 // Gemini 모델 이름
 const model = 'gemini-2.5-flash';
@@ -11,6 +12,15 @@ function getVertexAI(): VertexAI {
   if (!process.env.GOOGLE_CLOUD_PROJECT) {
     throw new Error('GOOGLE_CLOUD_PROJECT 환경 변수가 설정되지 않았습니다.');
   }
+
+  // Google Cloud 인증 설정
+  // 환경 변수에 JSON 키가 있으면 사용, 없으면 파일 경로 사용
+  if (process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON) {
+    // Vercel/Cloudflare 등 서버리스 환경: JSON 문자열로 인증
+    const credentials = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON);
+    process.env.GOOGLE_APPLICATION_CREDENTIALS = JSON.stringify(credentials);
+  }
+  // 로컬 개발 환경에서는 vertex-ai-key.json 파일 사용
 
   return new VertexAI({
     project: process.env.GOOGLE_CLOUD_PROJECT,
@@ -28,8 +38,11 @@ export async function generateCoordinateImage(request: CoordinateRequestServer) 
       model: model,
     });
 
+    // 이미지 압축 (1MB 이상인 경우 0.5MB로 압축)
+    const compressed = await compressImage(request.imageBuffer, request.mimeType);
+
     // Buffer를 Base64로 변환
-    const imageBase64 = request.imageBuffer.toString('base64');
+    const imageBase64 = compressed.buffer.toString('base64');
 
     // 프롬프트 생성
     const prompt = createPrompt(request);
@@ -42,7 +55,7 @@ export async function generateCoordinateImage(request: CoordinateRequestServer) 
           parts: [
             {
               inlineData: {
-                mimeType: request.mimeType,
+                mimeType: compressed.mimeType,
                 data: imageBase64,
               },
             },
@@ -73,9 +86,13 @@ export async function generateCoordinateImage(request: CoordinateRequestServer) 
  * 프롬프트 생성
  */
 function createPrompt(request: CoordinateRequestServer): string {
-  const { bodyInfo, styleOptions, tpo, bodyConcerns } = request;
+  const { bodyInfo, styleOptions, tpo, bodyConcerns, includeFace } = request;
 
-  return `당신은 전문 패션 스타일리스트입니다. 제공된 사용자 사진을 분석하고, 다음 정보를 바탕으로 최적의 코디네이션을 추천해주세요.
+  const introText = includeFace
+    ? '당신은 전문 패션 스타일리스트입니다. 제공된 사용자 전신 사진(얼굴 포함)을 분석하고, 다음 정보를 바탕으로 최적의 코디네이션을 추천해주세요.'
+    : '당신은 전문 패션 스타일리스트입니다. 제공된 사용자 전신 사진(목 아래부터)을 분석하고, 다음 정보를 바탕으로 최적의 코디네이션을 추천해주세요. 피부톤은 사용자가 입력한 정보를 기준으로 분석하세요.';
+
+  return introText + `
 
 ## 사용자 정보
 - 신장: ${bodyInfo.height}cm

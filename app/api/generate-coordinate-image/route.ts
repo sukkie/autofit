@@ -1,7 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { generateCoordinateImage } from '@/lib/vertex-ai';
-import type { BodyInfo, TPO, StyleOption, BodyConcern } from '@/types/coordinate';
+import { generateCoordinateImageFromAnalysis } from '@/lib/image-generation';
+import type {
+  BodyInfo,
+  TPO,
+  StyleOption,
+  BodyConcern,
+  Accessory,
+} from '@/types/coordinate';
 
 // 요청 데이터 검증 스키마
 const bodyInfoSchema = z.object({
@@ -18,53 +24,23 @@ const tpoSchema = z.object({
 });
 
 /**
- * POST /api/coordinate
- * 코디네이션 요청 처리
+ * POST /api/generate-coordinate-image
+ * 분석 결과를 기반으로 코디네이션 이미지 생성
  */
 export async function POST(request: NextRequest) {
   try {
     // FormData 파싱
     const formData = await request.formData();
 
-    // 파일 추출
-    const file = formData.get('userPhoto') as File;
-    if (!file) {
+    // 사용자 이미지 파일 추출
+    const userImage = formData.get('userImage') as File;
+    if (!userImage) {
       return NextResponse.json(
         {
           success: false,
           error: {
             code: 'MISSING_FILE',
-            message: '사용자 사진이 필요합니다.',
-          },
-        },
-        { status: 400 }
-      );
-    }
-
-    // 파일 크기 검증 (10MB)
-    const maxSize = parseInt(process.env.NEXT_PUBLIC_MAX_FILE_SIZE || '10485760');
-    if (file.size > maxSize) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: {
-            code: 'FILE_TOO_LARGE',
-            message: '파일 크기는 10MB 이하여야 합니다.',
-          },
-        },
-        { status: 400 }
-      );
-    }
-
-    // 파일 타입 검증
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
-    if (!allowedTypes.includes(file.type)) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: {
-            code: 'INVALID_FILE_TYPE',
-            message: 'JPEG, PNG, WEBP 형식만 지원됩니다.',
+            message: '사용자 이미지가 필요합니다.',
           },
         },
         { status: 400 }
@@ -76,9 +52,18 @@ export async function POST(request: NextRequest) {
     const styleOptionsStr = formData.get('styleOptions') as string;
     const tpoStr = formData.get('tpo') as string;
     const bodyConcernsStr = formData.get('bodyConcerns') as string;
+    const stylingTipsStr = formData.get('stylingTips') as string;
+    const accessoriesStr = formData.get('accessories') as string;
+    const colorPaletteStr = formData.get('colorPalette') as string;
     const includeFaceStr = formData.get('includeFace') as string;
 
-    if (!bodyInfoStr || !styleOptionsStr || !tpoStr) {
+    if (
+      !bodyInfoStr ||
+      !styleOptionsStr ||
+      !tpoStr ||
+      !stylingTipsStr ||
+      !colorPaletteStr
+    ) {
       return NextResponse.json(
         {
           success: false,
@@ -98,6 +83,11 @@ export async function POST(request: NextRequest) {
     const bodyConcerns: BodyConcern[] = bodyConcernsStr
       ? JSON.parse(bodyConcernsStr)
       : [];
+    const stylingTips: string[] = JSON.parse(stylingTipsStr);
+    const accessories: Accessory[] = accessoriesStr
+      ? JSON.parse(accessoriesStr)
+      : [];
+    const colorPalette: string[] = JSON.parse(colorPaletteStr);
     const includeFace: boolean = includeFaceStr ? JSON.parse(includeFaceStr) : true;
 
     // 데이터 검증
@@ -118,17 +108,20 @@ export async function POST(request: NextRequest) {
     }
 
     // File을 Buffer로 변환
-    const arrayBuffer = await file.arrayBuffer();
+    const arrayBuffer = await userImage.arrayBuffer();
     const imageBuffer = Buffer.from(arrayBuffer);
 
-    // Vertex AI 호출
-    const result = await generateCoordinateImage({
-      imageBuffer,
-      mimeType: file.type,
+    // 이미지 생성 API 호출
+    const result = await generateCoordinateImageFromAnalysis({
+      userImageBuffer: imageBuffer,
+      userImageMimeType: userImage.type,
       bodyInfo,
       styleOptions,
       tpo,
       bodyConcerns,
+      stylingTips,
+      accessories,
+      colorPalette,
       includeFace,
     });
 
@@ -136,15 +129,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       data: {
-        score: result.score,
-        stylingTips: result.stylingTips,
-        accessories: result.accessories,
-        colorPalette: result.colorPalette,
-        overallComment: result.overallComment,
+        imageUrl: result.imageUrl,
       },
     });
   } catch (error) {
-    console.error('API 오류:', error);
+    console.error('이미지 생성 API 오류:', error);
 
     // 에러 응답
     return NextResponse.json(
@@ -152,7 +141,7 @@ export async function POST(request: NextRequest) {
         success: false,
         error: {
           code: 'INTERNAL_ERROR',
-          message: '서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
+          message: '이미지 생성 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
         },
       },
       { status: 500 }
@@ -161,12 +150,12 @@ export async function POST(request: NextRequest) {
 }
 
 /**
- * GET /api/coordinate
+ * GET /api/generate-coordinate-image
  * 헬스체크
  */
 export async function GET() {
   return NextResponse.json({
     status: 'ok',
-    message: 'Coordinate API is running',
+    message: 'Generate Coordinate Image API is running',
   });
 }
