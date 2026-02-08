@@ -78,26 +78,50 @@
   },
   "bodyInfo": {
     "title": "身体情報入力",
-    "subtitle": "正確なコーディネーションのために身体情報を入力してください。",
+    "subtitle": "正確なスタイルガイドのために身体情報を入力してください。",
     "gender": "性別",
     "height": "身長 (cm)",
     "weight": "体重 (kg)",
-    "bodyType": "体型",
+    "bodyType": "体格",
     "skinTone": "肌色",
+    "skinToneTip": "💡 ヒント: 手首の血管が青ならクールトーン、緑ならウォームトーンです",
+    "shoulderWidth": "肩幅",
+    "bodyShape": "体型バランス",
+    "bodyShapeTip": "💡 ヒント: 上半身と下半身のバランスを考慮してください",
     "genders": {
       "male": "男性",
       "female": "女性"
     },
     "bodyTypes": {
-      "slim": "スリム - 痩せ型",
-      "normal": "標準 - 普通体型",
-      "chubby": "ぽっちゃり - ふくよか体型",
-      "muscular": "がっちり - 筋肉質体型"
+      "slim": "痩せ型 - 細身の体格",
+      "normal": "標準 - 普通の体格",
+      "chubby": "ぽっちゃり - ふくよかな体格",
+      "muscular": "筋肉質 - しっかりした体格"
     },
     "skinTones": {
       "cool": "クールトーン - 冷たい色調",
       "warm": "ウォームトーン - 暖かい色調",
       "neutral": "ニュートラル - 中間色調"
+    },
+    "shoulderWidths": {
+      "narrow": "狭い - 肩幅が狭い",
+      "normal": "普通 - 平均的な肩幅",
+      "wide": "広い - 肩幅が広い"
+    },
+    "bodyShapes": {
+      "male": {
+        "invertedTriangle": "逆三角形 - 肩幅が広く、ウエストが細い",
+        "rectangle": "長方形 - 肩とウエストが同じくらい",
+        "trapezoid": "台形 - 肩幅が少し広い",
+        "round": "円形 - 全体的に丸い体型"
+      },
+      "female": {
+        "hourglass": "砂時計 - 肩とヒップが同じくらい、くびれあり",
+        "triangle": "三角形 - ヒップが肩より広い（洋梨型）",
+        "invertedTriangle": "逆三角形 - 肩がヒップより広い",
+        "rectangle": "長方形 - 肩、ウエスト、ヒップが同じくらい",
+        "round": "円形 - 全体的に丸い体型"
+      }
     }
   },
   "photoUpload": {
@@ -106,6 +130,22 @@
     "dragDrop": "クリックまたはファイルをドラッグしてアップロード",
     "fileTypes": "JPEG, PNG, WEBP (最大10MB)",
     "selectFile": "ファイルを選択",
+    "viewExamples": "例を見る",
+    "exampleTitle": "良い写真の例",
+    "exampleSubtitle": "以下の例を参考にして全身写真を撮影してください。",
+    "goodExample": "良い例",
+    "badExample": "避けるべき例",
+    "fullBody": "全身（頭からつま先まで）",
+    "avoid": "避けてください",
+    "tip1": "頭からつま先まで全身を撮影",
+    "tip2": "明るい照明、自然光推奨",
+    "tip3": "単色背景（白/グレー）",
+    "tip4": "正面を向いて立つ",
+    "bad1": "顔や足が切れている",
+    "bad2": "照明が暗すぎる",
+    "bad3": "複雑な背景",
+    "bad4": "横顔や座った姿勢",
+    "understood": "わかりました",
     "remove": "画像を削除",
     "includeFace": "顔を含める（推奨）",
     "faceIncluded": "✅ 顔あり: 肌のトーンを正確に分析し、あなたの顔でコーディネート画像を生成します。",
@@ -179,8 +219,8 @@
     "title": "身体のお悩み",
     "subtitle": "カバーしたい身体的特徴があれば選択してください。 (任意)",
     "tip": "💡 選択したお悩みに基づいて体型をカバーするスタイリングのヒントを提供します。",
-    "submit": "✨ AIコーディネート画像を生成",
-    "submitting": "AI画像生成中...",
+    "submit": "✨ AIスタイル分析を開始",
+    "submitting": "AIスタイル分析中...",
     "concerns": {
       "shortHeight": {
         "title": "身長が低い",
@@ -214,31 +254,29 @@
   },
   "loading": {
     "title": "AIが分析しています...",
-    "subtitle": "最適なコーディネーションを探しています。少々お待ちください。"
+    "subtitle": "最適なコーディネーションを探しています。少々お待ちください。",
+    "estimatedTime": "予想時間: 30秒 〜 1分"
   },
   "error": {
     "title": "エラーが発生しました",
     "backButton": "最初に戻る"
   },
   "result": {
-    "title": "AIコーディネーション分析結果",
+    "title": "AIスタイルガイド",
     "subtitle": "あなたのためのカスタムスタイリングガイド",
+    "generateButton": "✨ 私専用AIコーディネート画像を生成",
+    "generating": "AIコーディネート画像生成中...",
+    "generatedTitle": "✨ AIおすすめコーディネート画像（2スタイル）",
+    "generatedSubtitle": "💡 左: フォーマル/クラシック | 右: カジュアル/モダン",
+    "originalPhoto": "元の写真",
+    "downloadImage": "コーディネート画像を保存",
     "download": "画像を保存",
     "share": "共有",
     "reset": "新しい分析",
-    "score": "コーディネートスコア",
-    "outOf": "/ 100点",
-    "overallComment": "総合評価",
+    "overallComment": "AIスタイル提案",
     "stylingTips": "スタイリングのヒント",
     "accessories": "おすすめアクセサリー",
     "colorPalette": "おすすめカラーパレット",
-    "colorHelp": "これらの色をメインカラーまたはアクセントカラーとして活用してください。",
-    "grades": {
-      "perfect": "完璧なコーディネーションです！ 👏",
-      "excellent": "素晴らしいスタイルです！ ✨",
-      "good": "良いコーディネートです。少しの改善でより完璧になります！",
-      "fair": "まずまずのスタイルです。いくつかの調整が必要です。",
-      "needsWork": "改善の余地があります。以下のヒントを参考にしてください！"
-    }
+    "colorHelp": "これらの色をメインカラーまたはアクセントカラーとして活用してください。"
   }
 }

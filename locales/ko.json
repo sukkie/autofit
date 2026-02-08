@@ -78,27 +78,50 @@
   },
   "bodyInfo": {
     "title": "신체 정보 입력",
-    "subtitle": "정확한 코디네이션을 위해 신체 정보를 입력해주세요.",
+    "subtitle": "정확한 스타일 가이드를 위해 신체 정보를 입력해주세요.",
     "gender": "성별",
     "height": "신장 (cm)",
     "weight": "체중 (kg)",
-    "bodyType": "체형",
+    "bodyType": "체격",
     "skinTone": "피부톤",
     "skinToneTip": "💡 팁: 손목 혈관이 파란색이면 쿨톤, 초록색이면 웜톤입니다",
+    "shoulderWidth": "어깨 너비",
+    "bodyShape": "체형 비율",
+    "bodyShapeTip": "💡 팁: 상체와 하체의 비율을 고려해주세요",
     "genders": {
       "male": "남성",
       "female": "여성"
     },
     "bodyTypes": {
-      "slim": "슬림 - 마른 체형",
-      "normal": "표준 - 보통 체형",
-      "chubby": "통통 - 풍만한 체형",
-      "muscular": "건장함 - 근육질 체형"
+      "slim": "마른 - 가벼운 체격",
+      "normal": "보통 - 표준 체격",
+      "chubby": "통통 - 풍만한 체격",
+      "muscular": "근육질 - 탄탄한 체격"
     },
     "skinTones": {
       "cool": "쿨톤 - 푸른빛/분홍빛 피부",
       "warm": "웜톤 - 노란빛/황금빛 피부",
       "neutral": "중성 - 쿨톤과 웜톤 중간"
+    },
+    "shoulderWidths": {
+      "narrow": "좁음 - 어깨가 좁은 편",
+      "normal": "보통 - 평범한 어깨",
+      "wide": "넓음 - 어깨가 넓은 편"
+    },
+    "bodyShapes": {
+      "male": {
+        "invertedTriangle": "역삼각형 - 어깨 넓고 허리 좁음",
+        "rectangle": "직사각형 - 어깨와 허리가 비슷",
+        "trapezoid": "사다리꼴 - 어깨가 약간 넓음",
+        "round": "원형 - 전체적으로 둥근 체형"
+      },
+      "female": {
+        "hourglass": "모래시계 - 어깨와 엉덩이 비슷, 잘록한 허리",
+        "triangle": "삼각형 - 엉덩이가 어깨보다 넓음 (배 체형)",
+        "invertedTriangle": "역삼각형 - 어깨가 엉덩이보다 넓음",
+        "rectangle": "직사각형 - 어깨, 허리, 엉덩이 비슷",
+        "round": "원형 - 전체적으로 둥근 체형"
+      }
     }
   },
   "photoUpload": {
@@ -107,6 +130,22 @@
     "dragDrop": "클릭하거나 파일을 드래그하여 업로드",
     "fileTypes": "JPEG, PNG, WEBP (최대 10MB)",
     "selectFile": "파일 선택",
+    "viewExamples": "예시 보기",
+    "exampleTitle": "좋은 사진 예시",
+    "exampleSubtitle": "아래 예시를 참고하여 전신 사진을 촬영해주세요.",
+    "goodExample": "좋은 예시",
+    "badExample": "피해야 할 예시",
+    "fullBody": "전신 (머리~발끝)",
+    "avoid": "피하세요",
+    "tip1": "전신이 모두 나오게 촬영",
+    "tip2": "밝은 조명, 자연광 권장",
+    "tip3": "단색 배경 (흰색/회색)",
+    "tip4": "정면을 바라보고 서기",
+    "bad1": "얼굴이나 발이 잘림",
+    "bad2": "너무 어두운 조명",
+    "bad3": "복잡한 배경",
+    "bad4": "옆모습이나 앉은 자세",
+    "understood": "이해했어요",
     "remove": "이미지 제거",
     "includeFace": "얼굴 포함 (권장)",
     "faceIncluded": "✅ 얼굴 포함 시: 피부톤을 정확히 분석하고, 추천 코디 이미지를 본인 얼굴로 생성합니다.",
@@ -180,8 +219,8 @@
     "title": "신체 고민 사항",
     "subtitle": "커버하고 싶은 신체적 특징이 있다면 선택해주세요. (선택사항)",
     "tip": "💡 선택하신 고민 사항을 바탕으로 체형을 보완하는 스타일링 팁을 제공합니다.",
-    "submit": "✨ AI 코디 이미지 생성하기",
-    "submitting": "AI 이미지 생성 중...",
+    "submit": "✨ AI 스타일 분석 시작하기",
+    "submitting": "AI 스타일 분석 중...",
     "concerns": {
       "shortHeight": {
         "title": "키가 작음",
@@ -215,31 +254,29 @@
   },
   "loading": {
     "title": "AI가 분석하고 있습니다...",
-    "subtitle": "최적의 코디네이션을 찾고 있습니다. 잠시만 기다려주세요."
+    "subtitle": "최적의 코디네이션을 찾고 있습니다. 잠시만 기다려주세요.",
+    "estimatedTime": "예상 시간: 30초 ~ 1분"
   },
   "error": {
     "title": "오류 발생",
     "backButton": "처음으로 돌아가기"
   },
   "result": {
-    "title": "AI 코디 분석 결과",
+    "title": "AI 스타일 가이드",
     "subtitle": "당신을 위한 맞춤 스타일링 가이드입니다",
+    "generateButton": "✨ 나만의 AI 코디 이미지 생성하기",
+    "generating": "AI 코디 이미지 생성 중...",
+    "generatedTitle": "✨ AI 추천 코디 이미지 (2가지 스타일)",
+    "generatedSubtitle": "💡 왼쪽: 포멀/클래식 스타일 | 오른쪽: 캐주얼/모던 스타일",
+    "originalPhoto": "원본 사진",
+    "downloadImage": "코디 이미지 저장",
     "download": "이미지 저장",
     "share": "공유하기",
     "reset": "새로 분석하기",
-    "score": "코디 점수",
-    "outOf": "/ 100점",
-    "overallComment": "종합 평가",
+    "overallComment": "AI 스타일 추천",
     "stylingTips": "스타일링 팁",
     "accessories": "추천 액세서리",
     "colorPalette": "추천 컬러 팔레트",
-    "colorHelp": "이 색상들을 메인 컬러나 포인트 컬러로 활용해보세요.",
-    "grades": {
-      "perfect": "완벽한 코디네이션입니다! 👏",
-      "excellent": "훌륭한 스타일입니다! ✨",
-      "good": "좋은 코디입니다. 약간의 개선으로 더 완벽해집니다!",
-      "fair": "괜찮은 스타일입니다. 몇 가지 조정이 필요합니다.",
-      "needsWork": "개선의 여지가 많습니다. 아래 팁을 참고해주세요!"
-    }
+    "colorHelp": "이 색상들을 메인 컬러나 포인트 컬러로 활용해보세요."
   }
 }

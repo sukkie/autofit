@@ -1,10 +1,19 @@
+// 남성 체형 비율 타입
+export type MaleBodyShape = '역삼각형' | '직사각형' | '사다리꼴' | '원형';
+
+// 여성 체형 비율 타입
+export type FemaleBodyShape = '모래시계' | '삼각형' | '역삼각형' | '직사각형' | '원형';
+
 // 신체 정보 타입
 export interface BodyInfo {
   gender: '남성' | '여성';
   height: number; // cm
   weight: number; // kg
-  bodyType: '슬림' | '표준' | '통통' | '건장함';
+  bodyType: '마른' | '보통' | '통통' | '근육질'; // 체격
   skinTone: '쿨톤' | '웜톤' | '중성';
+  // 상세 체형 정보
+  shoulderWidth: '좁음' | '보통' | '넓음';
+  bodyShape: MaleBodyShape | FemaleBodyShape; // 체형 비율 (성별에 따라 다름)
 }
 
 // 스타일 옵션 타입
@@ -40,35 +49,36 @@ export interface Accessory {
   reason: string;
 }
 
+// 컬러 추천 타입
+export interface Color {
+  name: string; // 색상 이름 (예: "네이비 블루")
+  hex: string; // Hex 코드 (예: "#4A4E69")
+  usage: string; // 활용 방법 (예: "메인 컬러로 추천")
+}
+
 // 코디네이션 요청 타입 (클라이언트)
 export interface CoordinateRequest {
-  userPhoto: File;
   bodyInfo: BodyInfo;
   styleOptions: StyleOption[];
   tpo: TPO;
   bodyConcerns: BodyConcern[];
-  includeFace: boolean; // 얼굴 포함 여부
 }
 
 // 코디네이션 요청 타입 (서버)
 export interface CoordinateRequestServer {
-  imageBuffer: Buffer;
-  mimeType: string;
   bodyInfo: BodyInfo;
   styleOptions: StyleOption[];
   tpo: TPO;
   bodyConcerns: BodyConcern[];
-  includeFace: boolean; // 얼굴 포함 여부
 }
 
 // 코디네이션 응답 타입
 export interface CoordinateResponse {
   success: boolean;
   data?: {
-    score: number; // 0-100점
     stylingTips: string[]; // 스타일링 팁 (최대 5개)
     accessories: Accessory[]; // 추천 액세서리 (최대 3개)
-    colorPalette: string[]; // 추천 컬러 (Hex 코드, 최대 5개)
+    colorPalette: Color[]; // 추천 컬러 (최대 5개)
     overallComment: string; // 전체 코멘트
   };
   error?: {
@@ -85,8 +95,8 @@ export interface GenerateCoordinateImageRequest {
   bodyConcerns: BodyConcern[];
   stylingTips: string[];
   accessories: Accessory[];
-  colorPalette: string[];
-  includeFace: boolean; // 얼굴 포함 여부
+  colorPalette: Color[];
+  locale?: string; // 언어 설정 (ko, ja, en 등)
 }
 
 // 코디 이미지 생성 응답 타입
@@ -103,7 +113,6 @@ export interface GenerateCoordinateImageResponse {
 
 // 폼 단계 타입
 export type FormStep =
-  | 'photo'
   | 'bodyInfo'
   | 'styleOption'
   | 'tpo'
@@ -113,9 +122,6 @@ export type FormStep =
 // 폼 상태 타입
 export interface FormState {
   currentStep: FormStep;
-  userPhoto: File | null;
-  previewUrl: string | null;
-  includeFace: boolean; // 얼굴 포함 여부
   bodyInfo: BodyInfo | null;
   styleOptions: StyleOption[];
   tpo: TPO | null;

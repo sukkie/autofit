@@ -4,10 +4,10 @@ import React, { useState } from 'react';
 import { Sparkles, Share2, RotateCcw, Download } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
-import { ScoreCard } from './ScoreCard';
 import { StylingTipsCard } from './StylingTipsCard';
 import { AccessoriesCard } from './AccessoriesCard';
 import { ColorPaletteCard } from './ColorPaletteCard';
+import { useLanguage } from '@/contexts/LanguageContext';
 import type {
   CoordinateResponse,
   BodyInfo,
@@ -20,33 +20,28 @@ import { downloadImage } from '@/lib/utils';
 
 interface ResultDashboardProps {
   result: NonNullable<CoordinateResponse['data']>;
-  previewUrl: string | null;
-  userPhoto: File | null;
   bodyInfo: BodyInfo | null;
   styleOptions: StyleOption[];
   tpo: TPO | null;
   bodyConcerns: BodyConcern[];
-  includeFace: boolean;
   onReset: () => void;
 }
 
 export function ResultDashboard({
   result,
-  previewUrl,
-  userPhoto,
   bodyInfo,
   styleOptions,
   tpo,
   bodyConcerns,
-  includeFace,
   onReset,
 }: ResultDashboardProps) {
+  const { t } = useLanguage();
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedImageUrl, setGeneratedImageUrl] = useState<string | null>(null);
 
   // 추천 코디 이미지 생성
   const handleGenerateCoordinate = async () => {
-    if (!userPhoto || !bodyInfo || !tpo) {
+    if (!bodyInfo || !tpo) {
       alert('필수 정보가 누락되었습니다.');
       return;
     }
@@ -54,25 +49,48 @@ export function ResultDashboard({
     setIsGenerating(true);
 
     try {
-      // FormData 생성
-      const formData = new FormData();
-      formData.append('userImage', userPhoto);
-      formData.append('bodyInfo', JSON.stringify(bodyInfo));
-      formData.append('styleOptions', JSON.stringify(styleOptions));
-      formData.append('tpo', JSON.stringify(tpo));
-      formData.append('bodyConcerns', JSON.stringify(bodyConcerns));
-      formData.append('stylingTips', JSON.stringify(result.stylingTips));
-      formData.append('accessories', JSON.stringify(result.accessories));
-      formData.append('colorPalette', JSON.stringify(result.colorPalette));
-      formData.append('includeFace', JSON.stringify(includeFace));
+      console.log('===== 이미지 생성 요청 시작 =====');
+      console.log('bodyInfo:', bodyInfo);
+      console.log('styleOptions:', styleOptions);
+      console.log('tpo:', tpo);
+      console.log('stylingTips:', result.stylingTips);
+      console.log('accessories:', result.accessories);
+      console.log('colorPalette:', result.colorPalette);
+
+      const requestBody = {
+        bodyInfo,
+        styleOptions,
+        tpo,
+        bodyConcerns,
+        stylingTips: result.stylingTips,
+        accessories: result.accessories,
+        colorPalette: result.colorPalette,
+      };
+
+      console.log('요청 body:', requestBody);
 
       // API 호출
       const response = await fetch('/api/generate-coordinate-image', {
         method: 'POST',
-        body: formData,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
       });
 
-      const apiResult: GenerateCoordinateImageResponse = await response.json();
+      console.log('응답 상태:', response.status, response.statusText);
+
+      const responseText = await response.text();
+      console.log('API 응답:', responseText);
+
+      let apiResult: GenerateCoordinateImageResponse;
+      try {
+        apiResult = JSON.parse(responseText);
+      } catch (parseError) {
+        console.error('JSON 파싱 오류:', parseError);
+        console.error('응답 내용:', responseText.substring(0, 500));
+        throw new Error('서버에서 잘못된 응답을 반환했습니다. 콘솔을 확인하세요.');
+      }
 
       if (!apiResult.success || !apiResult.data) {
         throw new Error(apiResult.error?.message || '이미지 생성에 실패했습니다.');
@@ -105,7 +123,7 @@ export function ResultDashboard({
       try {
         await navigator.share({
           title: '오토핏 코디 결과',
-          text: `AI 코디 점수: ${result.score}점\n\n${result.overallComment}`,
+          text: `${result.overallComment}`,
           url: window.location.href,
         });
       } catch (error) {
@@ -123,110 +141,116 @@ export function ResultDashboard({
       {/* 헤더 */}
       <div className="text-center">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          AI 코디 분석 결과
+          {t.result.title}
         </h1>
         <p className="text-gray-600">
-          당신을 위한 맞춤 스타일링 가이드입니다
+          {t.result.subtitle}
         </p>
       </div>
 
+      {/* 추천 코디 생성 버튼 - 최상단에 강조 */}
+      {!generatedImageUrl && (
+        <div className="flex justify-center mb-8">
+          <button
+            onClick={handleGenerateCoordinate}
+            disabled={isGenerating}
+            className={`
+              relative px-12 py-5 rounded-2xl font-bold text-xl
+              bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600
+              text-white shadow-2xl hover:shadow-3xl
+              transform transition-all duration-300
+              hover:scale-110 active:scale-95
+              disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none
+              flex items-center gap-4
+              animate-pulse hover:animate-none
+            `}
+          >
+            {isGenerating ? (
+              <>
+                <div className="animate-spin rounded-full h-6 w-6 border-2 border-white border-t-transparent" />
+                <span>{t.result.generating}</span>
+              </>
+            ) : (
+              <>
+                <Sparkles size={24} className="animate-bounce" />
+                <span>{t.result.generateButton}</span>
+                <Sparkles size={24} className="animate-bounce" />
+              </>
+            )}
+          </button>
+        </div>
+      )}
+
       {/* 액션 버튼 */}
       <div className="flex justify-center gap-4">
-        <Button
-          onClick={handleGenerateCoordinate}
-          variant="default"
-          size="sm"
-          disabled={isGenerating}
-        >
-          <Sparkles size={16} className="mr-2" />
-          {isGenerating ? 'AI 생성 중...' : '추천 코디 생성'}
-        </Button>
         {generatedImageUrl && (
-          <Button onClick={handleDownloadGenerated} variant="outline" size="sm">
+          <Button onClick={handleDownloadGenerated} variant="default" size="sm">
             <Download size={16} className="mr-2" />
-            코디 이미지 저장
+            {t.result.downloadImage}
           </Button>
         )}
         <Button onClick={handleShare} variant="outline" size="sm">
           <Share2 size={16} className="mr-2" />
-          공유하기
+          {t.result.share}
         </Button>
         <Button onClick={onReset} variant="ghost" size="sm">
           <RotateCcw size={16} className="mr-2" />
-          새로 분석하기
+          {t.result.reset}
         </Button>
       </div>
 
+      {/* 생성된 코디 이미지 - 전체 너비로 강조 */}
+      {generatedImageUrl && (
+        <Card className="mb-6 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+          <CardHeader>
+            <CardTitle className="text-2xl flex items-center justify-center gap-3">
+              <Sparkles size={24} className="text-purple-600 animate-pulse" />
+              {t.result.generatedTitle}
+              <Sparkles size={24} className="text-purple-600 animate-pulse" />
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-4">
+            <div className="overflow-x-auto">
+              <img
+                src={generatedImageUrl}
+                alt="AI Generated Outfits"
+                className="w-full h-auto rounded-xl shadow-xl"
+                style={{ minWidth: '1000px', maxHeight: '600px', objectFit: 'contain' }}
+              />
+            </div>
+            <p className="text-center text-sm text-gray-600 mt-4">
+              {t.result.generatedSubtitle}
+            </p>
+          </CardContent>
+        </Card>
+      )}
+
       {/* 메인 콘텐츠 */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* 왼쪽: 이미지 & 점수 */}
-        <div className="space-y-6">
-          {/* 사진 */}
-          {previewUrl && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base">원본 사진</CardTitle>
-              </CardHeader>
-              <CardContent className="p-0">
-                <img
-                  src={previewUrl}
-                  alt="사용자 사진"
-                  className="w-full h-auto rounded-lg"
-                />
-              </CardContent>
-            </Card>
-          )}
+      <div className="space-y-6">
+        {/* 전체 코멘트 */}
+        <Card>
+          <CardHeader>
+            <CardTitle>{t.result.overallComment}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-gray-700 leading-relaxed">
+              {result.overallComment}
+            </p>
+          </CardContent>
+        </Card>
 
-          {/* 생성된 코디 이미지 */}
-          {generatedImageUrl && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base flex items-center gap-2">
-                  <Sparkles size={18} className="text-blue-600" />
-                  AI 추천 코디
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-0">
-                <img
-                  src={generatedImageUrl}
-                  alt="AI 생성 코디"
-                  className="w-full h-auto rounded-lg"
-                />
-              </CardContent>
-            </Card>
-          )}
+        {/* 스타일링 팁 */}
+        <StylingTipsCard tips={result.stylingTips} />
 
-          {/* 점수 */}
-          <ScoreCard score={result.score} />
-        </div>
+        {/* 추천 액세서리 */}
+        {result.accessories.length > 0 && (
+          <AccessoriesCard accessories={result.accessories} />
+        )}
 
-        {/* 오른쪽: 분석 결과 */}
-        <div className="space-y-6">
-          {/* 전체 코멘트 */}
-          <Card>
-            <CardHeader>
-              <CardTitle>종합 평가</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-700 leading-relaxed">
-                {result.overallComment}
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* 스타일링 팁 */}
-          <StylingTipsCard tips={result.stylingTips} />
-
-          {/* 추천 액세서리 */}
-          {result.accessories.length > 0 && (
-            <AccessoriesCard accessories={result.accessories} />
-          )}
-
-          {/* 컬러 팔레트 */}
-          {result.colorPalette.length > 0 && (
-            <ColorPaletteCard colors={result.colorPalette} />
-          )}
-        </div>
+        {/* 컬러 팔레트 */}
+        {result.colorPalette.length > 0 && (
+          <ColorPaletteCard colors={result.colorPalette} />
+        )}
       </div>
     </div>
   );

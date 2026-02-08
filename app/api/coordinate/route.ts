@@ -5,10 +5,13 @@ import type { BodyInfo, TPO, StyleOption, BodyConcern } from '@/types/coordinate
 
 // 요청 데이터 검증 스키마
 const bodyInfoSchema = z.object({
+  gender: z.enum(['남성', '여성']),
   height: z.number().min(100).max(250),
   weight: z.number().min(30).max(200),
-  bodyType: z.enum(['슬림', '표준', '통통', '건장함']),
+  bodyType: z.enum(['마른', '보통', '통통', '근육질']),
   skinTone: z.enum(['쿨톤', '웜톤', '중성']),
+  shoulderWidth: z.enum(['좁음', '보통', '넓음']),
+  bodyShape: z.enum(['역삼각형', '삼각형', '직사각형', '모래시계', '원형', '사다리꼴']),
 });
 
 const tpoSchema = z.object({
@@ -19,66 +22,26 @@ const tpoSchema = z.object({
 
 /**
  * POST /api/coordinate
- * 코디네이션 요청 처리
+ * 코디네이션 요청 처리 (이미지 없이 체형 정보만으로)
  */
 export async function POST(request: NextRequest) {
   try {
-    // FormData 파싱
-    const formData = await request.formData();
-
-    // 파일 추출
-    const file = formData.get('userPhoto') as File;
-    if (!file) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: {
-            code: 'MISSING_FILE',
-            message: '사용자 사진이 필요합니다.',
-          },
-        },
-        { status: 400 }
-      );
-    }
-
-    // 파일 크기 검증 (10MB)
-    const maxSize = parseInt(process.env.NEXT_PUBLIC_MAX_FILE_SIZE || '10485760');
-    if (file.size > maxSize) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: {
-            code: 'FILE_TOO_LARGE',
-            message: '파일 크기는 10MB 이하여야 합니다.',
-          },
-        },
-        { status: 400 }
-      );
-    }
-
-    // 파일 타입 검증
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
-    if (!allowedTypes.includes(file.type)) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: {
-            code: 'INVALID_FILE_TYPE',
-            message: 'JPEG, PNG, WEBP 형식만 지원됩니다.',
-          },
-        },
-        { status: 400 }
-      );
-    }
-
     // JSON 데이터 파싱
-    const bodyInfoStr = formData.get('bodyInfo') as string;
-    const styleOptionsStr = formData.get('styleOptions') as string;
-    const tpoStr = formData.get('tpo') as string;
-    const bodyConcernsStr = formData.get('bodyConcerns') as string;
-    const includeFaceStr = formData.get('includeFace') as string;
+    const body = await request.json();
 
-    if (!bodyInfoStr || !styleOptionsStr || !tpoStr) {
+    const {
+      bodyInfo,
+      styleOptions,
+      tpo,
+      bodyConcerns = [],
+    }: {
+      bodyInfo: BodyInfo;
+      styleOptions: StyleOption[];
+      tpo: TPO;
+      bodyConcerns?: BodyConcern[];
+    } = body;
+
+    if (!bodyInfo || !styleOptions || !tpo) {
       return NextResponse.json(
         {
           success: false,
@@ -90,15 +53,6 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-
-    // 데이터 파싱
-    const bodyInfo: BodyInfo = JSON.parse(bodyInfoStr);
-    const styleOptions: StyleOption[] = JSON.parse(styleOptionsStr);
-    const tpo: TPO = JSON.parse(tpoStr);
-    const bodyConcerns: BodyConcern[] = bodyConcernsStr
-      ? JSON.parse(bodyConcernsStr)
-      : [];
-    const includeFace: boolean = includeFaceStr ? JSON.parse(includeFaceStr) : true;
 
     // 데이터 검증
     try {
@@ -117,26 +71,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // File을 Buffer로 변환
-    const arrayBuffer = await file.arrayBuffer();
-    const imageBuffer = Buffer.from(arrayBuffer);
-
-    // Vertex AI 호출
+    // Vertex AI 호출 (체형 정보만 전송)
     const result = await generateCoordinateImage({
-      imageBuffer,
-      mimeType: file.type,
       bodyInfo,
       styleOptions,
       tpo,
       bodyConcerns,
-      includeFace,
     });
 
     // 성공 응답
     return NextResponse.json({
       success: true,
       data: {
-        score: result.score,
         stylingTips: result.stylingTips,
         accessories: result.accessories,
         colorPalette: result.colorPalette,

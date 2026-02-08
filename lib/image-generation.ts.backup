@@ -146,14 +146,11 @@ export async function generateCoordinateImageFromAnalysis(
         },
       ],
       generationConfig: {
-        temperature: 0.4,
+        temperature: 0.4, // 창의성을 위해 약간 높임
         topK: 32,
         topP: 1,
-        candidateCount: 1,
-        responseModalities: ['IMAGE'], // 이미지 생성 모드 활성화 (핵심!)
-        imageConfig: {
-          aspectRatio: '16:9', // 가로 비율로 설정
-        },
+        maxOutputTokens: 8192,
+        candidateCount: 1, // 이미지 1장만 생성
       },
     });
 
@@ -287,7 +284,7 @@ ${styleOptions.join(', ')}
 ${stylingTips.map((tip, idx) => `${idx + 1}. ${tip}`).join('\n')}
 
 ## Recommended Colors
-${colorPalette.map(c => `${c.name} (${c.hex}) - ${c.usage}`).join('\n')}
+${colorPalette.join(', ')}
 
 ## Recommended Accessories
 ${accessoriesText}

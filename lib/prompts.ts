@@ -77,7 +77,13 @@ ${bodyConcerns.length > 0 ? bodyConcerns.map((concern, idx) => `${idx + 1}. ${co
       "reason": "이 액세서리가 스타일을 완성시키는 이유"
     }
   ],
-  "colorPalette": ["#HEXCODE1", "#HEXCODE2", "#HEXCODE3", "#HEXCODE4", "#HEXCODE5"],
+  "colorPalette": [
+    {
+      "name": "색상 이름 (예: 네이비 블루)",
+      "hex": "#HEXCODE",
+      "usage": "메인 컬러/포인트 컬러/액센트 등 활용 방법"
+    }
+  ],
   "overallComment": "전반적인 스타일 진단과 개선 방향을 150-200자로 요약"
 }
 \`\`\`

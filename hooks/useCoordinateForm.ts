@@ -12,7 +12,6 @@ import type {
 } from '@/types/coordinate';
 
 interface UseCoordinateFormReturn extends FormState {
-  setUserPhoto: (file: File, previewUrl: string, includeFace: boolean) => void;
   setBodyInfo: (info: BodyInfo) => void;
   setStyleOptions: (options: StyleOption[]) => void;
   setTPO: (tpo: TPO) => void;
@@ -27,7 +26,6 @@ interface UseCoordinateFormReturn extends FormState {
 const STEP_ORDER: FormStep[] = [
   'bodyInfo',
   'tpo',
-  'photo',
   'styleOption',
   'bodyConcern',
   'result',
@@ -35,9 +33,6 @@ const STEP_ORDER: FormStep[] = [
 
 const initialState: FormState = {
   currentStep: 'bodyInfo',
-  userPhoto: null,
-  previewUrl: null,
-  includeFace: true, // 기본값: 얼굴 포함
   bodyInfo: null,
   styleOptions: [],
   tpo: null,
@@ -52,17 +47,6 @@ const initialState: FormState = {
  */
 export function useCoordinateForm(): UseCoordinateFormReturn {
   const [state, setState] = useState<FormState>(initialState);
-
-  // 사용자 사진 설정
-  const setUserPhoto = useCallback((file: File, previewUrl: string, includeFace: boolean) => {
-    setState((prev) => ({
-      ...prev,
-      userPhoto: file,
-      previewUrl,
-      includeFace,
-      error: null,
-    }));
-  }, []);
 
   // 신체 정보 설정
   const setBodyInfo = useCallback((info: BodyInfo) => {
@@ -143,7 +127,6 @@ export function useCoordinateForm(): UseCoordinateFormReturn {
     try {
       // 필수 필드 검증
       if (
-        !state.userPhoto ||
         !state.bodyInfo ||
         state.styleOptions.length === 0 ||
         !state.tpo
@@ -151,19 +134,18 @@ export function useCoordinateForm(): UseCoordinateFormReturn {
         throw new Error('모든 필수 정보를 입력해주세요.');
       }
 
-      // FormData 생성
-      const formData = new FormData();
-      formData.append('userPhoto', state.userPhoto);
-      formData.append('bodyInfo', JSON.stringify(state.bodyInfo));
-      formData.append('styleOptions', JSON.stringify(state.styleOptions));
-      formData.append('tpo', JSON.stringify(state.tpo));
-      formData.append('bodyConcerns', JSON.stringify(state.bodyConcerns));
-      formData.append('includeFace', JSON.stringify(state.includeFace));
-
-      // API 호출
+      // API 호출 (JSON으로 전송)
       const response = await fetch('/api/coordinate', {
         method: 'POST',
-        body: formData,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          bodyInfo: state.bodyInfo,
+          styleOptions: state.styleOptions,
+          tpo: state.tpo,
+          bodyConcerns: state.bodyConcerns,
+        }),
       });
 
       const result: CoordinateResponse = await response.json();
@@ -196,7 +178,6 @@ export function useCoordinateForm(): UseCoordinateFormReturn {
 
   return {
     ...state,
-    setUserPhoto,
     setBodyInfo,
     setStyleOptions,
     setTPO,

@@ -78,27 +78,50 @@
   },
   "bodyInfo": {
     "title": "Enter Body Information",
-    "subtitle": "Please enter your body information for accurate coordination.",
+    "subtitle": "Please enter your body information for accurate style guide.",
     "gender": "Gender",
     "height": "Height (cm)",
     "weight": "Weight (kg)",
-    "bodyType": "Body Type",
+    "bodyType": "Build",
     "skinTone": "Skin Tone",
     "skinToneTip": "💡 Tip: If your wrist veins appear blue, you're cool-toned; if green, warm-toned",
+    "shoulderWidth": "Shoulder Width",
+    "bodyShape": "Body Proportion",
+    "bodyShapeTip": "💡 Tip: Consider your upper and lower body proportions",
     "genders": {
       "male": "Male",
       "female": "Female"
     },
     "bodyTypes": {
-      "slim": "Slim - Thin body type",
-      "normal": "Normal - Average body type",
-      "chubby": "Chubby - Fuller body type",
-      "muscular": "Muscular - Athletic body type"
+      "slim": "Slim - Light build",
+      "normal": "Normal - Average build",
+      "chubby": "Chubby - Fuller build",
+      "muscular": "Muscular - Athletic build"
     },
     "skinTones": {
       "cool": "Cool Tone - Blue/Pink undertones",
       "warm": "Warm Tone - Yellow/Golden undertones",
       "neutral": "Neutral - Between cool and warm"
+    },
+    "shoulderWidths": {
+      "narrow": "Narrow - Narrow shoulders",
+      "normal": "Normal - Average shoulders",
+      "wide": "Wide - Broad shoulders"
+    },
+    "bodyShapes": {
+      "male": {
+        "invertedTriangle": "Inverted Triangle - Broad shoulders, narrow waist",
+        "rectangle": "Rectangle - Shoulders and waist similar",
+        "trapezoid": "Trapezoid - Slightly broader shoulders",
+        "round": "Round - Overall rounded shape"
+      },
+      "female": {
+        "hourglass": "Hourglass - Shoulders and hips similar, defined waist",
+        "triangle": "Triangle - Hips wider than shoulders (Pear shape)",
+        "invertedTriangle": "Inverted Triangle - Shoulders wider than hips",
+        "rectangle": "Rectangle - Shoulders, waist, hips similar",
+        "round": "Round - Overall rounded shape"
+      }
     }
   },
   "photoUpload": {
@@ -107,6 +130,22 @@
     "dragDrop": "Click or drag file to upload",
     "fileTypes": "JPEG, PNG, WEBP (Max 10MB)",
     "selectFile": "Select File",
+    "viewExamples": "View Examples",
+    "exampleTitle": "Good Photo Examples",
+    "exampleSubtitle": "Please refer to these examples when taking your full body photo.",
+    "goodExample": "Good Example",
+    "badExample": "Examples to Avoid",
+    "fullBody": "Full Body (head to toe)",
+    "avoid": "Avoid",
+    "tip1": "Show full body from head to toe",
+    "tip2": "Bright lighting, natural light recommended",
+    "tip3": "Solid background (white/grey)",
+    "tip4": "Stand facing forward",
+    "bad1": "Face or feet cut off",
+    "bad2": "Too dark lighting",
+    "bad3": "Cluttered background",
+    "bad4": "Side view or sitting pose",
+    "understood": "Got it",
     "remove": "Remove Image",
     "includeFace": "Include Face (Recommended)",
     "faceIncluded": "✅ With Face: Accurately analyzes skin tone and generates outfit images with your face.",
@@ -180,8 +219,8 @@
     "title": "Body Concerns",
     "subtitle": "Select physical features you'd like to cover. (Optional)",
     "tip": "💡 We'll provide styling tips to complement your body type based on your selections.",
-    "submit": "✨ Generate AI Outfit Image",
-    "submitting": "Generating AI Image...",
+    "submit": "✨ Start AI Style Analysis",
+    "submitting": "Analyzing Your Style...",
     "concerns": {
       "shortHeight": {
         "title": "Short Height",
@@ -215,31 +254,29 @@
   },
   "loading": {
     "title": "AI is analyzing...",
-    "subtitle": "Finding the best coordination for you. Please wait a moment."
+    "subtitle": "Finding the best coordination for you. Please wait a moment.",
+    "estimatedTime": "Estimated time: 30 seconds ~ 1 minute"
   },
   "error": {
     "title": "Error Occurred",
     "backButton": "Back to Start"
   },
   "result": {
-    "title": "AI Coordination Analysis Results",
+    "title": "AI Style Guide",
     "subtitle": "Your personalized styling guide",
+    "generateButton": "✨ Generate My AI Outfit Images",
+    "generating": "Generating AI Outfit Images...",
+    "generatedTitle": "✨ AI Recommended Outfits (2 Styles)",
+    "generatedSubtitle": "💡 Left: Formal/Classic Style | Right: Casual/Modern Style",
+    "originalPhoto": "Original Photo",
+    "downloadImage": "Save Outfit Image",
     "download": "Save Image",
     "share": "Share",
     "reset": "New Analysis",
-    "score": "Coordination Score",
-    "outOf": "/ 100",
-    "overallComment": "Overall Assessment",
+    "overallComment": "AI Style Recommendation",
     "stylingTips": "Styling Tips",
     "accessories": "Recommended Accessories",
     "colorPalette": "Recommended Color Palette",
-    "colorHelp": "Use these colors as main or accent colors.",
-    "grades": {
-      "perfect": "Perfect coordination! 👏",
-      "excellent": "Excellent style! ✨",
-      "good": "Good coordination. A few tweaks will make it perfect!",
-      "fair": "Decent style. Some adjustments needed.",
-      "needsWork": "Room for improvement. Please check the tips below!"
-    }
+    "colorHelp": "Use these colors as main or accent colors."
   }
 }

@@ -21,8 +21,10 @@ export function BodyInfoStep({ onNext, onPrev, initialData }: BodyInfoStepProps)
       gender: '남성',
       height: 170,
       weight: 65,
-      bodyType: '표준',
+      bodyType: '보통',
       skinTone: '중성',
+      shoulderWidth: '보통',
+      bodyShape: '직사각형',
     }
   );
 
@@ -40,10 +42,37 @@ export function BodyInfoStep({ onNext, onPrev, initialData }: BodyInfoStepProps)
 
   // 일반 입력 변경 핸들러
   const handleChange = (field: keyof BodyInfo, value: string | number) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    setFormData((prev) => {
+      const updated = { ...prev, [field]: value };
+      // 성별이 변경되면 체형을 기본값으로 리셋
+      if (field === 'gender') {
+        updated.bodyShape = value === '남성' ? '직사각형' : '직사각형';
+      }
+      return updated;
+    });
     // 에러 초기화
     if (errors[field]) {
       setErrors((prev) => ({ ...prev, [field]: undefined }));
+    }
+  };
+
+  // 성별에 따른 체형 옵션
+  const getBodyShapeOptions = () => {
+    if (formData.gender === '남성') {
+      return [
+        { value: '역삼각형', label: t.bodyInfo.bodyShapes.male.invertedTriangle },
+        { value: '직사각형', label: t.bodyInfo.bodyShapes.male.rectangle },
+        { value: '사다리꼴', label: t.bodyInfo.bodyShapes.male.trapezoid },
+        { value: '원형', label: t.bodyInfo.bodyShapes.male.round },
+      ];
+    } else {
+      return [
+        { value: '모래시계', label: t.bodyInfo.bodyShapes.female.hourglass },
+        { value: '삼각형', label: t.bodyInfo.bodyShapes.female.triangle },
+        { value: '역삼각형', label: t.bodyInfo.bodyShapes.female.invertedTriangle },
+        { value: '직사각형', label: t.bodyInfo.bodyShapes.female.rectangle },
+        { value: '원형', label: t.bodyInfo.bodyShapes.female.round },
+      ];
     }
   };
 
@@ -125,10 +154,10 @@ export function BodyInfoStep({ onNext, onPrev, initialData }: BodyInfoStepProps)
           value={formData.bodyType}
           onChange={(e) => handleChange('bodyType', e.target.value as BodyInfo['bodyType'])}
           options={[
-            { value: '슬림', label: t.bodyInfo.bodyTypes.slim },
-            { value: '표준', label: t.bodyInfo.bodyTypes.normal },
+            { value: '마른', label: t.bodyInfo.bodyTypes.slim },
+            { value: '보통', label: t.bodyInfo.bodyTypes.normal },
             { value: '통통', label: t.bodyInfo.bodyTypes.chubby },
-            { value: '건장함', label: t.bodyInfo.bodyTypes.muscular },
+            { value: '근육질', label: t.bodyInfo.bodyTypes.muscular },
           ]}
           required
         />
@@ -147,6 +176,31 @@ export function BodyInfoStep({ onNext, onPrev, initialData }: BodyInfoStepProps)
           />
           <p className="mt-2 text-sm text-gray-500">
             {t.bodyInfo.skinToneTip}
+          </p>
+        </div>
+
+        <Select
+          label={t.bodyInfo.shoulderWidth}
+          value={formData.shoulderWidth}
+          onChange={(e) => handleChange('shoulderWidth', e.target.value as BodyInfo['shoulderWidth'])}
+          options={[
+            { value: '좁음', label: t.bodyInfo.shoulderWidths.narrow },
+            { value: '보통', label: t.bodyInfo.shoulderWidths.normal },
+            { value: '넓음', label: t.bodyInfo.shoulderWidths.wide },
+          ]}
+          required
+        />
+
+        <div>
+          <Select
+            label={t.bodyInfo.bodyShape}
+            value={formData.bodyShape}
+            onChange={(e) => handleChange('bodyShape', e.target.value as BodyInfo['bodyShape'])}
+            options={getBodyShapeOptions()}
+            required
+          />
+          <p className="mt-2 text-sm text-gray-500">
+            {t.bodyInfo.bodyShapeTip}
           </p>
         </div>
 

@@ -11,10 +11,13 @@ import type {
 
 // 요청 데이터 검증 스키마
 const bodyInfoSchema = z.object({
+  gender: z.enum(['남성', '여성']),
   height: z.number().min(100).max(250),
   weight: z.number().min(30).max(200),
-  bodyType: z.enum(['슬림', '표준', '통통', '건장함']),
+  bodyType: z.enum(['마른', '보통', '통통', '근육질']),
   skinTone: z.enum(['쿨톤', '웜톤', '중성']),
+  shoulderWidth: z.enum(['좁음', '보통', '넓음']),
+  bodyShape: z.enum(['역삼각형', '삼각형', '직사각형', '모래시계', '원형', '사다리꼴']),
 });
 
 const tpoSchema = z.object({
@@ -28,42 +31,40 @@ const tpoSchema = z.object({
  * 분석 결과를 기반으로 코디네이션 이미지 생성
  */
 export async function POST(request: NextRequest) {
-  try {
-    // FormData 파싱
-    const formData = await request.formData();
+  console.log('===== 이미지 생성 API 호출됨 =====');
 
-    // 사용자 이미지 파일 추출
-    const userImage = formData.get('userImage') as File;
-    if (!userImage) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: {
-            code: 'MISSING_FILE',
-            message: '사용자 이미지가 필요합니다.',
-          },
-        },
-        { status: 400 }
-      );
-    }
+  try {
+    // 로케일 감지 (헤더 또는 쿠키에서)
+    const acceptLanguage = request.headers.get('accept-language') || '';
+    const locale = acceptLanguage.toLowerCase().includes('ko') ? 'ko'
+                  : acceptLanguage.toLowerCase().includes('ja') ? 'ja'
+                  : 'en';
+    console.log('감지된 로케일:', locale);
 
     // JSON 데이터 파싱
-    const bodyInfoStr = formData.get('bodyInfo') as string;
-    const styleOptionsStr = formData.get('styleOptions') as string;
-    const tpoStr = formData.get('tpo') as string;
-    const bodyConcernsStr = formData.get('bodyConcerns') as string;
-    const stylingTipsStr = formData.get('stylingTips') as string;
-    const accessoriesStr = formData.get('accessories') as string;
-    const colorPaletteStr = formData.get('colorPalette') as string;
-    const includeFaceStr = formData.get('includeFace') as string;
+    console.log('1. JSON 파싱 시작...');
+    const body = await request.json();
+    console.log('2. JSON 파싱 완료:', Object.keys(body));
 
-    if (
-      !bodyInfoStr ||
-      !styleOptionsStr ||
-      !tpoStr ||
-      !stylingTipsStr ||
-      !colorPaletteStr
-    ) {
+    const {
+      bodyInfo,
+      styleOptions,
+      tpo,
+      bodyConcerns = [],
+      stylingTips,
+      accessories = [],
+      colorPalette,
+    }: {
+      bodyInfo: BodyInfo;
+      styleOptions: StyleOption[];
+      tpo: TPO;
+      bodyConcerns?: BodyConcern[];
+      stylingTips: string[];
+      accessories?: Accessory[];
+      colorPalette: string[];
+    } = body;
+
+    if (!bodyInfo || !styleOptions || !tpo || !stylingTips || !colorPalette) {
       return NextResponse.json(
         {
           success: false,
@@ -75,20 +76,6 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-
-    // 데이터 파싱
-    const bodyInfo: BodyInfo = JSON.parse(bodyInfoStr);
-    const styleOptions: StyleOption[] = JSON.parse(styleOptionsStr);
-    const tpo: TPO = JSON.parse(tpoStr);
-    const bodyConcerns: BodyConcern[] = bodyConcernsStr
-      ? JSON.parse(bodyConcernsStr)
-      : [];
-    const stylingTips: string[] = JSON.parse(stylingTipsStr);
-    const accessories: Accessory[] = accessoriesStr
-      ? JSON.parse(accessoriesStr)
-      : [];
-    const colorPalette: string[] = JSON.parse(colorPaletteStr);
-    const includeFace: boolean = includeFaceStr ? JSON.parse(includeFaceStr) : true;
 
     // 데이터 검증
     try {
@@ -107,14 +94,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // File을 Buffer로 변환
-    const arrayBuffer = await userImage.arrayBuffer();
-    const imageBuffer = Buffer.from(arrayBuffer);
-
-    // 이미지 생성 API 호출
+    // 이미지 생성 API 호출 (사진 없이)
     const result = await generateCoordinateImageFromAnalysis({
-      userImageBuffer: imageBuffer,
-      userImageMimeType: userImage.type,
       bodyInfo,
       styleOptions,
       tpo,
@@ -122,7 +103,7 @@ export async function POST(request: NextRequest) {
       stylingTips,
       accessories,
       colorPalette,
-      includeFace,
+      locale,
     });
 
     // 성공 응답
@@ -134,6 +115,8 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('이미지 생성 API 오류:', error);
+    console.error('에러 상세:', error instanceof Error ? error.message : String(error));
+    console.error('스택 트레이스:', error instanceof Error ? error.stack : 'N/A');
 
     // 에러 응답
     return NextResponse.json(
@@ -141,7 +124,8 @@ export async function POST(request: NextRequest) {
         success: false,
         error: {
           code: 'INTERNAL_ERROR',
-          message: '이미지 생성 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
+          message: error instanceof Error ? error.message : '이미지 생성 중 오류가 발생했습니다.',
+          details: error instanceof Error ? error.stack : String(error),
         },
       },
       { status: 500 }

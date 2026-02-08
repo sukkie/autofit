@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { useCoordinateForm } from '@/hooks/useCoordinateForm';
 import { LandingPage } from '@/components/LandingPage';
-import { PhotoUploadStep } from '@/components/forms/PhotoUploadStep';
 import { BodyInfoStep } from '@/components/forms/BodyInfoStep';
 import { StyleOptionStep } from '@/components/forms/StyleOptionStep';
 import { TPOSelectionStep } from '@/components/forms/TPOSelectionStep';
@@ -30,11 +29,10 @@ export default function HomePage() {
   // 단계 인디케이터
   const StepIndicator = () => {
     const steps = [
-      { id: 'bodyInfo', label: '신체정보' },
-      { id: 'tpo', label: '착용상황' },
-      { id: 'photo', label: '사진' },
-      { id: 'styleOption', label: '스타일' },
-      { id: 'bodyConcern', label: '고민사항' },
+      { id: 'bodyInfo', label: t.steps.bodyInfo },
+      { id: 'tpo', label: t.steps.tpo },
+      { id: 'styleOption', label: t.steps.styleOption },
+      { id: 'bodyConcern', label: t.steps.bodyConcern },
     ];
 
     const currentIndex = steps.findIndex((s) => s.id === form.currentStep);
@@ -86,9 +84,12 @@ export default function HomePage() {
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
             {t.loading.title}
           </h2>
-          <p className="text-gray-600">
+          <p className="text-gray-600 mb-3">
             {t.loading.subtitle}
           </p>
+          <div className="inline-block px-4 py-2 bg-blue-50 text-blue-700 rounded-lg text-sm font-medium">
+            ⏱️ {t.loading.estimatedTime}
+          </div>
         </Card>
       </div>
     );
@@ -121,13 +122,10 @@ export default function HomePage() {
     return (
       <ResultDashboard
         result={form.result}
-        previewUrl={form.previewUrl}
-        userPhoto={form.userPhoto}
         bodyInfo={form.bodyInfo}
         styleOptions={form.styleOptions}
         tpo={form.tpo}
         bodyConcerns={form.bodyConcerns}
-        includeFace={form.includeFace}
         onReset={() => {
           form.resetForm();
           setShowLanding(true);
@@ -160,16 +158,6 @@ export default function HomePage() {
           }}
           onPrev={form.prevStep}
           initialData={form.tpo}
-        />
-      )}
-
-      {form.currentStep === 'photo' && (
-        <PhotoUploadStep
-          onNext={(file, previewUrl, includeFace) => {
-            form.setUserPhoto(file, previewUrl, includeFace);
-            form.nextStep();
-          }}
-          onPrev={form.prevStep}
         />
       )}
 
