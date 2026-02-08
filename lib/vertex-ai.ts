@@ -9,7 +9,15 @@ const isNodeEnvironment = typeof process !== 'undefined' && process.versions?.no
 /**
  * Node.js 환경: SDK 사용
  */
-async function generateWithSDK(request: CoordinateRequestServer) {
+// 응답 타입 정의
+interface CoordinateResult {
+  stylingTips: any[];
+  accessories: any[];
+  colorPalette: any[];
+  overallComment: string;
+}
+
+async function generateWithSDK(request: CoordinateRequestServer): Promise<CoordinateResult> {
   const { VertexAI } = await import('@google-cloud/vertexai');
 
   const project = process.env.GOOGLE_CLOUD_PROJECT;
@@ -67,7 +75,7 @@ async function generateWithSDK(request: CoordinateRequestServer) {
 /**
  * Cloudflare Workers 환경: REST API 사용
  */
-async function generateWithRESTAPI(request: CoordinateRequestServer) {
+async function generateWithRESTAPI(request: CoordinateRequestServer): Promise<CoordinateResult> {
   // REST API 구현은 나중에 Cloudflare에 배포할 때 추가
   // 지금은 에러를 던짐
   throw new Error('Cloudflare Workers 환경에서는 아직 지원되지 않습니다. Node.js 환경에서 실행하세요.');
@@ -76,7 +84,7 @@ async function generateWithRESTAPI(request: CoordinateRequestServer) {
 /**
  * 사용자 체형 정보를 기반으로 코디네이션 가이드 생성
  */
-export async function generateCoordinateImage(request: CoordinateRequestServer) {
+export async function generateCoordinateImage(request: CoordinateRequestServer): Promise<CoordinateResult> {
   try {
     if (isNodeEnvironment) {
       // Node.js: SDK 사용 (로컬 개발, Vercel 등)
@@ -163,7 +171,7 @@ ${bodyConcerns.length > 0 ? bodyConcerns.join(', ') : '없음'}
 /**
  * AI 응답 파싱
  */
-function parseAIResponse(text: string) {
+function parseAIResponse(text: string): CoordinateResult {
   try {
     // JSON 부분만 추출 (```json ... ``` 형식 처리)
     const jsonMatch = text.match(/```json\s*([\s\S]*?)\s*```/);

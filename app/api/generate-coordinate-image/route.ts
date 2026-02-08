@@ -7,6 +7,7 @@ import type {
   StyleOption,
   BodyConcern,
   Accessory,
+  Color,
 } from '@/types/coordinate';
 
 // 요청 데이터 검증 스키마
@@ -61,7 +62,7 @@ export async function POST(request: NextRequest) {
       bodyConcerns?: BodyConcern[];
       stylingTips: string[];
       accessories?: Accessory[];
-      colorPalette: string[];
+      colorPalette: Color[];
     } = body;
 
     if (!bodyInfo || !styleOptions || !tpo || !stylingTips || !colorPalette) {

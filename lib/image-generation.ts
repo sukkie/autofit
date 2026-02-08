@@ -154,7 +154,7 @@ export async function generateCoordinateImageFromAnalysis(
         imageConfig: {
           aspectRatio: '16:9', // 가로 비율로 설정
         },
-      },
+      } as any, // TypeScript 타입 문제 우회
     });
 
     const response = result.response;

@@ -184,7 +184,7 @@ export function ResultDashboard({
       {/* 액션 버튼 */}
       <div className="flex justify-center gap-4">
         {generatedImageUrl && (
-          <Button onClick={handleDownloadGenerated} variant="default" size="sm">
+          <Button onClick={handleDownloadGenerated} variant="primary" size="sm">
             <Download size={16} className="mr-2" />
             {t.result.downloadImage}
           </Button>
